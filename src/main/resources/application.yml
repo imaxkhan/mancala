@@ -1,0 +1,20 @@
+spring:
+ application:
+  name: Mancala
+
+server:
+  servlet:
+    context-path: /api
+  port: 8080
+
+springdoc:
+  swagger-ui:
+    path: /v2/swagger-ui
+  api-docs:
+    path: /v2/api-docs
+
+
+logging:
+  level:
+    root: info
+    org.springframework.web: debug
