@@ -12,7 +12,14 @@ springdoc:
     path: /v2/swagger-ui
   api-docs:
     path: /v2/api-docs
-
+game:
+  config:
+    player-count-limit: 2
+    pit-count-limit: 12
+    pit-count-per-player-limit: 6
+    seed-count-per-pit-limit: 4
+    store-count-per-player-limit: 1
+    store-count-limit: 2
 
 logging:
   level:
