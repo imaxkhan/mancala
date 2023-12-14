@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.bol.mancala.base.util.GeneralUtility.validateProperty;
+
 @Service
 public class GameSetupService implements GameValidator, GameGenerator {
 
@@ -55,13 +57,6 @@ public class GameSetupService implements GameValidator, GameGenerator {
 
         if (!customErrorResults.isEmpty()) {
             throw new CustomException(CustomErrorCode.VALIDATION_FAILED, "Validation Failed for some input", null, customErrorResults);
-        }
-    }
-
-    private void validateProperty(int actual, int expected, String propertyName, List<CustomErrorResult> errorResults) {
-        if (actual != expected) {
-            errorResults.add(new CustomErrorResult(CustomErrorCode.VALIDATION_FAILED,
-                    propertyName + " must be " + expected, propertyName, null));
         }
     }
 
