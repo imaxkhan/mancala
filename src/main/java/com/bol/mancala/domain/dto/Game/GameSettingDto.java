@@ -18,6 +18,8 @@ public class GameSettingDto {
     private int totalSeedPerPit;
     @Min(1)
     private int playerCount;
+    @Min(1)
+    private int totalPitPerPlayer;
 
     public GameSettingDto(GameSetting gameSetting) {
         if (gameSetting != null) {
@@ -25,6 +27,7 @@ public class GameSettingDto {
             this.totalStores = gameSetting.getTotalStores();
             this.totalSeedPerPit = gameSetting.getTotalSeedPerPit();
             this.playerCount = gameSetting.getPlayerCount();
+            this.totalPitPerPlayer = gameSetting.getTotalPitPerPlayer();
         }
     }
 }

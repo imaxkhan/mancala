@@ -11,4 +11,5 @@ public class GameSetting {
     private int totalSeedPerPit;
     private final int totalSeeds;
     private int playerCount;
+    private int totalPitPerPlayer;
 }
