@@ -7,7 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GameSettingResultDto extends GameSettingDto {
+    private int totalSeeds;
+
     public GameSettingResultDto(GameSetting gameSetting) {
         super(gameSetting);
+        this.totalSeeds = gameSetting.getTotalSeeds();
     }
 }

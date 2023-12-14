@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@ConfigurationProperties(prefix = "")
+@ConfigurationProperties(prefix = "game.config")
 @Configuration
 @Getter
 @Setter

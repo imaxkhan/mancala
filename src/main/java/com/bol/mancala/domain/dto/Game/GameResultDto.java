@@ -19,6 +19,7 @@ public class GameResultDto extends GameDto {
 
     public GameResultDto(Game game) {
         super(game);
+        this.gameId = game.getGameId();
         this.gameSettingResultDto = new GameSettingResultDto(game.getGameSetting());
         this.playerResults = game.getPlayers()
                 .stream()

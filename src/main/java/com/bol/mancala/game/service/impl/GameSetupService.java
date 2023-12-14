@@ -78,8 +78,8 @@ public class GameSetupService implements GameValidator, GameGenerator {
                 .totalPits(gameSettingDto.getTotalPits())
                 .totalStores(gameSettingDto.getTotalStores())
                 .totalSeedPerPit(gameSettingDto.getTotalSeedPerPit())
-                .totalSeeds(gameSettingDto.getTotalSeeds())
-                .totalSeedPerPit(gameSettingDto.getTotalSeedPerPit() * gameSettingDto.getTotalPits())
+                .totalSeeds(gameSettingDto.getTotalSeedPerPit() * gameSettingDto.getTotalPits())
+                .totalSeedPerPit(gameSettingDto.getTotalSeedPerPit())
                 .build();
     }
 

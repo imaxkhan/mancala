@@ -3,10 +3,12 @@ package com.bol.mancala.domain.dto.Game;
 import com.bol.mancala.domain.model.game.GameSetting;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class GameSettingDto {
     @Min(1)
     private int totalPits;
@@ -14,8 +16,6 @@ public class GameSettingDto {
     private int totalStores;
     @Min(1)
     private int totalSeedPerPit;
-    @Min(1)
-    private int totalSeeds;
     @Min(1)
     private int playerCount;
 
@@ -25,7 +25,6 @@ public class GameSettingDto {
             this.totalStores = gameSetting.getTotalStores();
             this.totalSeedPerPit = gameSetting.getTotalSeedPerPit();
             this.playerCount = gameSetting.getPlayerCount();
-            this.totalSeeds = gameSetting.getTotalSeeds();
         }
     }
 }
