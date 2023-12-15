@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.UUID;
 
 @RequestMapping("/api")
-public interface PlayerPickController {
+public interface PlayerRandomPickController {
 
     @PutMapping("/players/pick/{gameId}")
     ResponseEntity<PlayerRandomPickResultDto> pickPlayer(@PathVariable("gameId") UUID gameId) throws CustomException;

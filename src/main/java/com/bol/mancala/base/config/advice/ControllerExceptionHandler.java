@@ -34,7 +34,7 @@ public class ControllerExceptionHandler {
         exception.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            CustomErrorResult customErrorResult = new CustomErrorResult(CustomErrorCode.VALIDATION_FAILED, errorMessage, fieldName, null);
+            CustomErrorResult customErrorResult = new CustomErrorResult(CustomErrorCode.VALIDATION_FAILED, errorMessage, fieldName);
             customErrorResultBucket.add(customErrorResult);
         });
         response.setStatus(CustomErrorCode.VALIDATION_FAILED.getValue());
@@ -45,7 +45,7 @@ public class ControllerExceptionHandler {
     public List<CustomErrorResult> handleMethodArgumentTypeMismatchExceptions(MethodArgumentTypeMismatchException exception, HttpServletResponse response) {
         List<CustomErrorResult> customErrorResultBucket = new ArrayList<>();
         response.setStatus(CustomErrorCode.VALIDATION_FAILED.getValue());
-        customErrorResultBucket.add(new CustomErrorResult(CustomErrorCode.VALIDATION_FAILED, exception.getMessage(), exception.getName(), exception.getCause().toString()));
+        customErrorResultBucket.add(new CustomErrorResult(CustomErrorCode.VALIDATION_FAILED, exception.getMessage(), exception.getName()));
         return customErrorResultBucket;
     }
 
@@ -54,7 +54,7 @@ public class ControllerExceptionHandler {
     public List<CustomErrorResult> handleAccessDeniedException(AccessDeniedException exception, HttpServletResponse response) {
         List<CustomErrorResult> customErrorResultBucket = new ArrayList<>();
         response.setStatus(CustomErrorCode.UNAUTHORIZED.getValue());
-        customErrorResultBucket.add(new CustomErrorResult(CustomErrorCode.UNAUTHORIZED, exception.getMessage(), null, null));
+        customErrorResultBucket.add(new CustomErrorResult(CustomErrorCode.UNAUTHORIZED, exception.getMessage(), null));
         return customErrorResultBucket;
     }
 
@@ -62,7 +62,7 @@ public class ControllerExceptionHandler {
     public List<CustomErrorResult> handleHttpRequestFormatException(HttpMessageNotReadableException exception, HttpServletResponse response) {
         List<CustomErrorResult> customErrorResultBucket = new ArrayList<>();
         response.setStatus(CustomErrorCode.FORMAT_EXCEPTION.getValue());
-        customErrorResultBucket.add(new CustomErrorResult(CustomErrorCode.FORMAT_EXCEPTION, exception.getMessage(), null, null));
+        customErrorResultBucket.add(new CustomErrorResult(CustomErrorCode.FORMAT_EXCEPTION, exception.getMessage(), null));
         return customErrorResultBucket;
     }
 
@@ -70,6 +70,6 @@ public class ControllerExceptionHandler {
     public CustomErrorResult handleUnHandledException(Exception exception, HttpServletResponse response) {
         exception.printStackTrace();
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        return new CustomErrorResult(CustomErrorCode.INTERNAL_SERVER_ERROR, "Internal Server Error", null, exception.getMessage());
+        return new CustomErrorResult(CustomErrorCode.INTERNAL_SERVER_ERROR, "Internal Server Error", exception.getMessage());
     }
 }

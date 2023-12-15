@@ -8,6 +8,8 @@ import com.bol.mancala.domain.dto.Game.GameDto;
 import com.bol.mancala.domain.dto.Game.GameResultDto;
 import com.bol.mancala.domain.dto.Game.GameSettingDto;
 import com.bol.mancala.domain.dto.Game.PlayerDto;
+import com.bol.mancala.domain.model.concept.Board;
+import com.bol.mancala.domain.model.concept.Pit;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.game.GameSetting;
 import com.bol.mancala.domain.model.player.Player;
@@ -17,7 +19,9 @@ import com.bol.mancala.game.service.GameSetupService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.bol.mancala.base.util.GeneralUtility.validateProperty;
@@ -53,7 +57,7 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
         validateProperty(gameSetting.getTotalStores(), applicationProperties.getStoreCountLimit(), "store count", customErrorResults);
 
         if (!customErrorResults.isEmpty()) {
-            throw new CustomException(CustomErrorCode.VALIDATION_FAILED, "Validation Failed for some input", null, customErrorResults);
+            throw new CustomException(CustomErrorCode.VALIDATION_FAILED, "Validation Failed for some input", customErrorResults);
         }
     }
 
@@ -70,6 +74,7 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
         return GameSetting.builder()
                 .playerCount(gameSettingDto.getPlayerCount())
                 .totalPits(gameSettingDto.getTotalPits())
+                .totalPitPerPlayer(gameSettingDto.getTotalPitPerPlayer())
                 .totalStores(gameSettingDto.getTotalStores())
                 .totalSeedPerPit(gameSettingDto.getTotalSeedPerPit())
                 .totalSeeds(gameSettingDto.getTotalSeedPerPit() * gameSettingDto.getTotalPits())
@@ -88,21 +93,31 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
 
     @Override
     public void initializeGame(Game game) {
+        int totalPitPerPlayer = game.getGameSetting().getTotalPitPerPlayer();
+        Board board = new Board();
+        board.setActivePlayerId(null);
+        List<Pit> pits = new ArrayList<>();
+
+        int index = 0;
         for (Player player : game.getPlayers()) {
-//            PlayerBoard playerBoard = new PlayerBoard();
-//            playerBoard.setPlayer(player);
-//            int totalPitPerPlayer = game.getGameSetting().getTotalPitPerPlayer();
-//            int totalSeedPerPit = game.getGameSetting().getTotalSeedPerPit();
-//            Set<Pit> pits = new HashSet<>();
-//            for (int i = 0; i < totalPitPerPlayer; i++) {
-//                Pit pit = new Pit();
-//                pit.setIndex(i);
-//                pit.setSeedCount(totalSeedPerPit);
-//                pits.add(pit);
-//            }
-//            playerBoard.setPits(pits);
-//            playerBoard.setStore(new Store(0));
-//            player.setPlayerBoard(playerBoard);
+            for (int j = 0; j < totalPitPerPlayer; j++) {
+                Pit pit = new Pit();
+                pit.setSeedCount(game.getGameSetting().getTotalSeedPerPit());
+                pit.setIndex(index);
+                pit.setStore(false);
+                pit.setPlayerId(player.getPlayerId());
+                pits.add(pit);
+                index = index + 1;
+            }
+            Pit pit = new Pit();
+            pit.setIndex(index);
+            pit.setStore(true);
+            pit.setPlayerId(player.getPlayerId());
+            pit.setSeedCount(0);
+            pits.add(pit);
+            index = index + 1;
         }
+        board.setPits(pits);
+        game.setBoard(board);
     }
 }

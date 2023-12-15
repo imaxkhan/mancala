@@ -10,7 +10,7 @@ public class GeneralUtility {
     public static void validateProperty(int actual, int expected, String propertyName, List<CustomErrorResult> errorResults) {
         if (actual != expected) {
             errorResults.add(new CustomErrorResult(CustomErrorCode.VALIDATION_FAILED,
-                    propertyName + " must be " + expected, propertyName, null));
+                    propertyName + " must be " + expected, propertyName));
         }
     }
 }

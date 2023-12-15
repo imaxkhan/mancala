@@ -10,14 +10,12 @@ public class CustomErrorResult {
     private final CustomErrorCode code;
     private final String message;
     private final String field;
-    private String trace;
 
 
-    public CustomErrorResult(CustomErrorCode code, String message, String field, String trace) {
+    public CustomErrorResult(CustomErrorCode code, String message, String field) {
         this.code = code;
         this.message = message;
         this.field = field;
-        this.trace = trace;
     }
 
     public CustomErrorResult(CustomException exception) {

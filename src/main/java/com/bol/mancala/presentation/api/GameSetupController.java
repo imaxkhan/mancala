@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api")
 public interface GameSetupController {
 
-    @PostMapping("/games")
+    @PostMapping("/games/setup")
     ResponseEntity<GameResultDto> createGame(@Valid @RequestBody GameDto gameDto) throws CustomException;
 
 }

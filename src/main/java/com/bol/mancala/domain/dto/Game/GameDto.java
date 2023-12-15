@@ -22,12 +22,6 @@ public class GameDto implements IValidation {
     @NotEmpty
     private List<PlayerDto> players;
 
-    public GameDto(Game game) {
-        if (game != null) {
-            this.gameSetting = new GameSettingDto(game.getGameSetting());
-        }
-    }
-
     @Override
     public void validate() throws CustomException {
         for (PlayerDto player : players) {
