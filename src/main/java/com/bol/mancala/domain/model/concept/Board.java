@@ -1,5 +1,6 @@
 package com.bol.mancala.domain.model.concept;
 
+import com.bol.mancala.domain.model.player.Player;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,5 +11,5 @@ import java.util.UUID;
 @Setter
 public class Board {
     private List<Pit> pits;
-    private UUID activePlayerId;
+    private Player activePlayer;
 }

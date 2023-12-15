@@ -57,7 +57,7 @@ public class PlayerRandomPickerServiceImpl implements PlayerRandomPickerService 
 
     @Override
     public void updateGameSetup(Game game, Player firstPlayer) {
-        game.getBoard().setActivePlayerId(firstPlayer.getPlayerId());
+        game.getBoard().setActivePlayer(firstPlayer);
         game.setStatus(GameStatus.RUNNING);
         gameRepository.saveOrUpdate(game);
     }

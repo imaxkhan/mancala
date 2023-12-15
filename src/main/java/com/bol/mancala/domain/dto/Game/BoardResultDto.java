@@ -6,21 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class BoardResultDto {
+    private PlayerResultDto activePlayer;
     private List<PitResultDto> pits;
-    private UUID activePlayerId;
 
     public BoardResultDto(Board board) {
         this.pits = board.getPits()
                 .stream()
                 .map(PitResultDto::new)
                 .collect(Collectors.toList());
-        this.activePlayerId = board.getActivePlayerId();
+        if (board.getActivePlayer() != null) {
+            this.activePlayer = new PlayerResultDto(board.getActivePlayer());
+        }
     }
 }

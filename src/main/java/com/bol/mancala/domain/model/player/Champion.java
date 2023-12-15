@@ -4,15 +4,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @NoArgsConstructor
 public class Champion {
-    private UUID playerId;
+    private Player player;
+    private int totalSeed;
 
-    public Champion(UUID playerId) {
-        this.playerId = playerId;
+    public Champion(Player player, int totalSeed) {
+        this.player = player;
+        this.totalSeed = totalSeed;
     }
 }

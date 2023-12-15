@@ -15,6 +15,8 @@ public class PlayerResultDto extends PlayerDto {
 
     public PlayerResultDto(Player player) {
         super(player);
-        this.playerId = player.getPlayerId();
+        if (player != null) {
+            this.playerId = player.getPlayerId();
+        }
     }
 }

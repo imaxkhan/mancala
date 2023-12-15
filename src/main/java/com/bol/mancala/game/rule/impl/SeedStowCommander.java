@@ -28,7 +28,7 @@ public class SeedStowCommander implements GameCommander {
             currentIndex = (currentIndex + 1) % (game.getGameSetting().getTotalPits() + game.getGameSetting().getTotalStores());
             Pit nextPit = game.getBoard().getPits().get(currentIndex);
 
-            if (!nextPit.getPlayerId().equals(playerId) && nextPit.isStore()) {
+            if (!nextPit.getPlayer().getPlayerId().equals(playerId) && nextPit.isStore()) {
                 i--;
                 continue;
             }
@@ -39,7 +39,7 @@ public class SeedStowCommander implements GameCommander {
 
     private void checkLastStow(Game game, UUID playerId, int lastIndex) {
         Pit pit = game.getBoard().getPits().get(lastIndex);
-        if (pit.isStore() && pit.getPlayerId().equals(playerId)) {
+        if (pit.isStore() && pit.getPlayer().getPlayerId().equals(playerId)) {
             System.out.println("ur turn again");
         } else {
             handleLastStowOnOwnPit(game, pit, playerId);
@@ -47,21 +47,23 @@ public class SeedStowCommander implements GameCommander {
     }
 
     private void handleLastStowOnOwnPit(Game game, Pit pit, UUID playerId) {
-        if (pit.getPlayerId().equals(playerId) && pit.getSeedCount() == 0) {
-            int oppositePitIndex = getOppositePitIndex(game.getGameSetting().getTotalPitPerPlayer(), pit.getIndex());
+        if (pit.getPlayer().getPlayerId().equals(playerId) && pit.getSeedCount() == 0) {
+            int oppositePitIndex = getOppositePitIndex(game.getGameSetting().getTotalPits(), pit.getIndex());
             captureAllGainedSeeds(game, playerId, pit, game.getBoard().getPits().get(oppositePitIndex));
+        } else {
+            changeTurn(game, playerId);
         }
     }
 
     private void changeTurn(Game game, UUID playerId) {
         Optional<Player> nextPlayer = game.getPlayers().stream().filter(player -> !player.getPlayerId().equals(playerId)).findFirst();
-        nextPlayer.ifPresent(player -> game.getBoard().setActivePlayerId(player.getPlayerId()));
+        nextPlayer.ifPresent(player -> game.getBoard().setActivePlayer(player));
     }
 
     private void captureAllGainedSeeds(Game game, UUID playerId, Pit currentPit, Pit opponentPit) {
-        Optional<Pit> probableStore = game.getBoard().getPits().stream().filter(pit -> pit.isStore() && pit.getPlayerId().equals(playerId)).findFirst();
+        Optional<Pit> probableStore = game.getBoard().getPits().stream().filter(pit -> pit.isStore() && pit.getPlayer().getPlayerId().equals(playerId)).findFirst();
         probableStore.ifPresent(store -> {
-            if (currentPit.getSeedCount() > 0) {
+            if (currentPit.getSeedCount() == 0) {
                 store.setSeedCount(store.getSeedCount() + opponentPit.getSeedCount() + 1);
                 currentPit.setSeedCount(0);
                 opponentPit.setSeedCount(0);
@@ -72,7 +74,7 @@ public class SeedStowCommander implements GameCommander {
 
     }
 
-    private int getOppositePitIndex(int totalPitPerPlayer, int currentPitIndex) {
-        return totalPitPerPlayer - currentPitIndex - 1;
+    private int getOppositePitIndex(int totalPits, int currentPitIndex) {
+        return totalPits - currentPitIndex;
     }
 }

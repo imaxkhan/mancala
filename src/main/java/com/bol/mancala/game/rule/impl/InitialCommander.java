@@ -16,6 +16,7 @@ public class InitialCommander implements GameCommander, GameValidator {
     @Override
     public void play(Game game, PlayDto playDto) throws CustomException {
         checkGameStatus(game.getStatus());
+        checkTurn(game.getBoard(), playDto.getPlayerId());
     }
 
     @Override
@@ -29,7 +30,7 @@ public class InitialCommander implements GameCommander, GameValidator {
 
     @Override
     public void checkTurn(Board board, UUID playerId) throws CustomException {
-        if (!board.getActivePlayerId().equals(playerId)) {
+        if (!board.getActivePlayer().getPlayerId().equals(playerId)) {
             throw new CustomException(CustomErrorCode.VALIDATION_FAILED, "its not your turn");
         }
     }

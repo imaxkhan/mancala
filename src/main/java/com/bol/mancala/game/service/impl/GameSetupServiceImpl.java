@@ -95,7 +95,7 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
     public void initializeGame(Game game) {
         int totalPitPerPlayer = game.getGameSetting().getTotalPitPerPlayer();
         Board board = new Board();
-        board.setActivePlayerId(null);
+        board.setActivePlayer(null);
         List<Pit> pits = new ArrayList<>();
 
         int index = 0;
@@ -105,14 +105,14 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
                 pit.setSeedCount(game.getGameSetting().getTotalSeedPerPit());
                 pit.setIndex(index);
                 pit.setStore(false);
-                pit.setPlayerId(player.getPlayerId());
+                pit.setPlayer(player);
                 pits.add(pit);
                 index = index + 1;
             }
             Pit pit = new Pit();
             pit.setIndex(index);
             pit.setStore(true);
-            pit.setPlayerId(player.getPlayerId());
+            pit.setPlayer(player);
             pit.setSeedCount(0);
             pits.add(pit);
             index = index + 1;

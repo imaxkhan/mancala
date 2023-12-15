@@ -9,7 +9,7 @@ public class FinishCommander implements GameCommander {
 
     @Override
     public void play(Game game, PlayDto playDto) {
-        if (game.getChampion() != null && game.getChampion().getPlayerId() != null) {
+        if (game.getChampion() != null && game.getChampion().getPlayer() != null) {
             game.setStatus(GameStatus.FINISHED);
         }
     }

@@ -4,10 +4,10 @@ import com.bol.mancala.domain.dto.play.PlayDto;
 import com.bol.mancala.domain.model.concept.Pit;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.player.Champion;
+import com.bol.mancala.domain.model.player.Player;
 import com.bol.mancala.game.rule.basic.GameCommander;
 
 import java.util.Map;
-import java.util.UUID;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
@@ -20,17 +20,20 @@ public class ChampionCommander implements GameCommander {
     }
 
     private void checkChampion(Game game) {
-        Map<UUID, Integer> seedCountPerPitGroupByPlayerId = game.getBoard().getPits()
+        Map<Player, Integer> seedCountPerPitGroupByPlayer = game.getBoard().getPits()
                 .stream()
-                .collect(groupingBy(Pit::getPlayerId, summingInt(Pit::getSeedCount)));
-        UUID championPlayerId = null;
-        for (java.util.UUID UUID : seedCountPerPitGroupByPlayerId.keySet()) {
-            if (seedCountPerPitGroupByPlayerId.get(UUID) == 0) {
-                championPlayerId = UUID;
+                .filter(pit -> !pit.isStore())
+                .collect(groupingBy(Pit::getPlayer, summingInt(Pit::getSeedCount)));
+        Player champion = null;
+        for (Player player : seedCountPerPitGroupByPlayer.keySet()) {
+            if (seedCountPerPitGroupByPlayer.get(player) == 0) {
+                champion = player;
             }
         }
-        if(championPlayerId!=null){
-            game.setChampion(new Champion(championPlayerId));
+        if (champion != null) {
+            int totalSeeds = game.getBoard().getPits().stream()
+                    .map(Pit::getSeedCount).mapToInt(Integer::intValue).sum();
+            game.setChampion(new Champion(champion, totalSeeds));
         }
     }
 }

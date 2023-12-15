@@ -23,7 +23,7 @@ public class PitSelectionCommander implements GameCommander, PitValidator {
     public void checkOwner(Game game, UUID playerId, int pitIndex) throws CustomException {
         if (game.getBoard().getPits().get(pitIndex) != null) {
             Pit pit = game.getBoard().getPits().get(pitIndex);
-            if (!playerId.equals(pit.getPlayerId())) {
+            if (!playerId.equals(pit.getPlayer().getPlayerId())) {
                 throw new CustomException(CustomErrorCode.VALIDATION_FAILED, "Pit does not belong to you");
             }
         }
