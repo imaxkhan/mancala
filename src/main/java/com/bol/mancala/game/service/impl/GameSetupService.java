@@ -13,7 +13,6 @@ import com.bol.mancala.domain.model.concept.Store;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.game.GameSetting;
 import com.bol.mancala.domain.model.player.Player;
-import com.bol.mancala.domain.model.player.PlayerBoard;
 import com.bol.mancala.game.repository.GameRepository;
 import com.bol.mancala.game.service.GameGenerator;
 import com.bol.mancala.game.service.GameValidator;

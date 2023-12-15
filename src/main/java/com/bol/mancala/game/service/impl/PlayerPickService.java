@@ -30,7 +30,7 @@ public class PlayerPickService implements PlayerPicker {
     public PlayerPickResultDto findFirstPlayerTurn(UUID gameId) throws CustomException {
         Game game = checkGameStatus(gameId);
         Player firstPlayer = checkPlayer(game);
-        updateGame(game, firstPlayer);
+        updateGameSetup(game, firstPlayer);
         return new PlayerPickResultDto(gameId, firstPlayer);
     }
 
@@ -56,7 +56,7 @@ public class PlayerPickService implements PlayerPicker {
     }
 
     @Override
-    public void updateGame(Game game, Player firstPlayer) {
+    public void updateGameSetup(Game game, Player firstPlayer) {
         firstPlayer.getPlayerBoard().setMyTurn(true);
         game.setStatus(GameStatus.RUNNING);
         gameRepository.saveOrUpdate(game);

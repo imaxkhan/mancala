@@ -15,5 +15,5 @@ public interface PlayerPicker {
 
     Player checkPlayer(Game game) throws CustomException;
 
-    void updateGame(Game game, Player firstPlayer);
+    void updateGameSetup(Game game, Player firstPlayer);
 }

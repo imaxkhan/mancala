@@ -12,5 +12,4 @@ import java.util.UUID;
 public class Player {
     private UUID playerId;
     private String userName;
-    private PlayerBoard playerBoard;
 }

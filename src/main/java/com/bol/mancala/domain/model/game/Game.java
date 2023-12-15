@@ -1,6 +1,7 @@
 package com.bol.mancala.domain.model.game;
 
 import com.bol.mancala.domain.enums.GameStatus;
+import com.bol.mancala.domain.model.concept.Board;
 import com.bol.mancala.domain.model.player.Champion;
 import com.bol.mancala.domain.model.player.Player;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class Game {
     private UUID gameId;
     private List<Player> players;
+    private Board board;
     private GameSetting gameSetting;
     private Champion champion;
     private GameStatus status;
