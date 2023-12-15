@@ -4,9 +4,11 @@ import com.bol.mancala.base.exception.CustomException;
 import com.bol.mancala.domain.dto.play.PlayDto;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.game.rule.impl.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GameCommanderChain {
     private final List<GameCommander> executors;
 

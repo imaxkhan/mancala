@@ -11,12 +11,12 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PlayerPickResultDto {
+public class PlayerRandomPickResultDto {
     private UUID gameId;
     private Player player;
     private GameStatus status;
 
-    public PlayerPickResultDto(UUID gameId, Player player) {
+    public PlayerRandomPickResultDto(UUID gameId, Player player) {
         this.gameId = gameId;
         this.player = player;
         this.status = GameStatus.RUNNING;

@@ -8,14 +8,12 @@ import com.bol.mancala.domain.dto.Game.GameDto;
 import com.bol.mancala.domain.dto.Game.GameResultDto;
 import com.bol.mancala.domain.dto.Game.GameSettingDto;
 import com.bol.mancala.domain.dto.Game.PlayerDto;
-import com.bol.mancala.domain.model.concept.Pit;
-import com.bol.mancala.domain.model.concept.Store;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.game.GameSetting;
 import com.bol.mancala.domain.model.player.Player;
 import com.bol.mancala.game.repository.GameRepository;
-import com.bol.mancala.game.service.GameGenerator;
-import com.bol.mancala.game.service.GameValidator;
+import com.bol.mancala.game.service.GameGeneratorService;
+import com.bol.mancala.game.service.GameSetupService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +23,12 @@ import java.util.stream.Collectors;
 import static com.bol.mancala.base.util.GeneralUtility.validateProperty;
 
 @Service
-public class GameSetupService implements GameValidator, GameGenerator {
+public class GameSetupServiceImpl implements GameSetupService, GameGeneratorService {
 
     private final GameRepository gameRepository;
     private final ApplicationProperties applicationProperties;
 
-    public GameSetupService(@Qualifier("GM-IM-RP") GameRepository gameRepository, ApplicationProperties applicationProperties) {
+    public GameSetupServiceImpl(@Qualifier("GM-IM-RP") GameRepository gameRepository, ApplicationProperties applicationProperties) {
         this.gameRepository = gameRepository;
         this.applicationProperties = applicationProperties;
     }
@@ -91,20 +89,20 @@ public class GameSetupService implements GameValidator, GameGenerator {
     @Override
     public void initializeGame(Game game) {
         for (Player player : game.getPlayers()) {
-            PlayerBoard playerBoard = new PlayerBoard();
-            playerBoard.setPlayer(player);
-            int totalPitPerPlayer = game.getGameSetting().getTotalPitPerPlayer();
-            int totalSeedPerPit = game.getGameSetting().getTotalSeedPerPit();
-            Set<Pit> pits = new HashSet<>();
-            for (int i = 0; i < totalPitPerPlayer; i++) {
-                Pit pit = new Pit();
-                pit.setIndex(i);
-                pit.setSeedCount(totalSeedPerPit);
-                pits.add(pit);
-            }
-            playerBoard.setPits(pits);
-            playerBoard.setStore(new Store(0));
-            player.setPlayerBoard(playerBoard);
+//            PlayerBoard playerBoard = new PlayerBoard();
+//            playerBoard.setPlayer(player);
+//            int totalPitPerPlayer = game.getGameSetting().getTotalPitPerPlayer();
+//            int totalSeedPerPit = game.getGameSetting().getTotalSeedPerPit();
+//            Set<Pit> pits = new HashSet<>();
+//            for (int i = 0; i < totalPitPerPlayer; i++) {
+//                Pit pit = new Pit();
+//                pit.setIndex(i);
+//                pit.setSeedCount(totalSeedPerPit);
+//                pits.add(pit);
+//            }
+//            playerBoard.setPits(pits);
+//            playerBoard.setStore(new Store(0));
+//            player.setPlayerBoard(playerBoard);
         }
     }
 }

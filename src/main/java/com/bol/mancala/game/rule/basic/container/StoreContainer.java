@@ -1,4 +1,4 @@
-package com.bol.mancala.game.rule.basic;
+package com.bol.mancala.game.rule.basic.container;
 
 import com.bol.mancala.domain.model.concept.Store;
 import lombok.Getter;

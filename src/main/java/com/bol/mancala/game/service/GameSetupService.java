@@ -6,7 +6,7 @@ import com.bol.mancala.domain.dto.Game.PlayerDto;
 
 import java.util.List;
 
-public interface GameValidator {
+public interface GameSetupService {
 
     void validateGameSetting(GameSettingDto gameSetting) throws CustomException;
 

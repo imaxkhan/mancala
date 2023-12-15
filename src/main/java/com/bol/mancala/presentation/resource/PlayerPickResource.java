@@ -1,8 +1,8 @@
 package com.bol.mancala.presentation.resource;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayerPickResultDto;
-import com.bol.mancala.game.service.impl.PlayerPickService;
+import com.bol.mancala.domain.dto.play.PlayerRandomPickResultDto;
+import com.bol.mancala.game.service.impl.PlayerRandomPickerServiceImpl;
 import com.bol.mancala.presentation.api.PlayerPickController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PlayerPickResource implements PlayerPickController {
 
-    private final PlayerPickService service;
+    private final PlayerRandomPickerServiceImpl service;
 
     @Override
-    public ResponseEntity<PlayerPickResultDto> pickPlayer(UUID gameId) throws CustomException {
-        PlayerPickResultDto gameResultDto = service.findFirstPlayerTurn(gameId);
+    public ResponseEntity<PlayerRandomPickResultDto> pickPlayer(UUID gameId) throws CustomException {
+        PlayerRandomPickResultDto gameResultDto = service.findFirstPlayerTurn(gameId);
         return ResponseEntity.ok(gameResultDto);
     }
 }

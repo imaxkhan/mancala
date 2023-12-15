@@ -1,15 +1,15 @@
 package com.bol.mancala.game.service;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayerPickResultDto;
+import com.bol.mancala.domain.dto.play.PlayerRandomPickResultDto;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.player.Player;
 
 import java.util.UUID;
 
-public interface PlayerPicker {
+public interface PlayerRandomPickerService {
 
-    PlayerPickResultDto findFirstPlayerTurn(UUID gameId) throws CustomException;
+    PlayerRandomPickResultDto findFirstPlayerTurn(UUID gameId) throws CustomException;
 
     Game checkGameStatus(UUID gameId) throws CustomException;
 

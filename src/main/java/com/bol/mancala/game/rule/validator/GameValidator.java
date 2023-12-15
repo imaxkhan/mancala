@@ -8,5 +8,6 @@ import java.util.UUID;
 
 public interface GameValidator {
     void checkGameStatus(GameStatus status) throws CustomException;
+
     void checkTurn(Board board, UUID playerId) throws CustomException;
 }
