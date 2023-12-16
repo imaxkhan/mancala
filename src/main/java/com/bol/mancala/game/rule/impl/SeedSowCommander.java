@@ -1,12 +1,12 @@
 package com.bol.mancala.game.rule.impl;
 
-import com.bol.mancala.base.exception.CustomException;
 import com.bol.mancala.domain.dto.play.PlayDto;
 import com.bol.mancala.domain.model.concept.Pit;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.player.Player;
 import com.bol.mancala.game.rule.basic.GameCommander;
 import com.bol.mancala.game.rule.basic.container.LastPitContainerInfo;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -15,12 +15,14 @@ import java.util.UUID;
  * Third Commander concrete class in chain
  * main method for implementing game rules
  */
+@Slf4j
 public class SeedSowCommander implements GameCommander {
 
     @Override
     public void play(Game game, PlayDto playDto) {
         LastPitContainerInfo lastSowInfo = this.sow(game, playDto.getPitIndex(), playDto.getPlayerId());
         this.checkLastStow(game, playDto.getPlayerId(), lastSowInfo);
+        log.info("After Sowing The Seeds, Last Pit Index Is " + lastSowInfo.getCurrentIndex());
     }
 
     /**
@@ -31,7 +33,6 @@ public class SeedSowCommander implements GameCommander {
      * @param pitIndex unique identifier of pit
      * @param playerId of the game in his/her turn
      * @return lastIndex of pit when all seeds are sowed
-     * @throws CustomException when inner methods decide
      */
     public LastPitContainerInfo sow(Game game, int pitIndex, UUID playerId) {
         Pit pit = game.getBoard().getPits().get(pitIndex);
@@ -58,32 +59,29 @@ public class SeedSowCommander implements GameCommander {
      * check if last pit is a store, then player turn won't change
      * otherwise other method decide
      *
-     * @param game
-     * @param playerId
      * @param lastIndexInfo last pit index and old capacity of last pit
      */
     private void checkLastStow(Game game, UUID playerId, LastPitContainerInfo lastIndexInfo) {
         Pit pit = game.getBoard().getPits().get(lastIndexInfo.getCurrentIndex());
         if (pit.isStore() && pit.getPlayer().getPlayerId().equals(playerId)) {
-            System.out.println("ur turn again");
+            log.info("Last Index Is Store(BigPit), So It's Your Turn Again");
         } else {
             handleLastSowOnOwnPit(game, pit, lastIndexInfo.getOldSeedCount(), playerId);
         }
     }
 
     /**
-     *      * if last pit its own pit and is empty
-     *      * gather opposite index of opponent seeds and stow them in own store
-     *      * if last pit is not empty on own pit then change player turn
-     * @param game
-     * @param currentPit
+     * * if last pit its own pit and is empty
+     * * gather opposite index of opponent seeds and stow them in own store
+     * * if last pit is not empty on own pit then change player turn
+     *
+     * @param currentPit  means last index
      * @param oldCapacity before updating
-     * @param playerId
      */
     private void handleLastSowOnOwnPit(Game game, Pit currentPit, int oldCapacity, UUID playerId) {
         if (currentPit.getPlayer().getPlayerId().equals(playerId) && oldCapacity == 0) {
             int oppositePitIndex = getOppositePitIndex(game.getGameSetting().getTotalPits(), currentPit.getIndex());
-            captureAllGainedSeeds(game, playerId, oldCapacity,currentPit, game.getBoard().getPits().get(oppositePitIndex));
+            captureAllGainedSeeds(game, playerId, oldCapacity, currentPit, game.getBoard().getPits().get(oppositePitIndex));
         } else {
             changeTurn(game, playerId);
         }
@@ -91,9 +89,6 @@ public class SeedSowCommander implements GameCommander {
 
     /**
      * to change player turn on game board
-     *
-     * @param game
-     * @param playerId
      */
     private void changeTurn(Game game, UUID playerId) {
         Optional<Player> nextPlayer = game.getPlayers().stream().filter(player -> !player.getPlayerId().equals(playerId)).findFirst();
@@ -104,12 +99,10 @@ public class SeedSowCommander implements GameCommander {
      * to capture all the seeds on opponent pit and own pit to store
      * based on rule of former method
      *
-     * @param game
-     * @param playerId
-     * @param currentPit
-     * @param opponentPit
+     * @param currentPit  means last index
+     * @param opponentPit counter wise index
      */
-    private void captureAllGainedSeeds(Game game, UUID playerId, int currentPitOldCapacity,Pit currentPit, Pit opponentPit) {
+    private void captureAllGainedSeeds(Game game, UUID playerId, int currentPitOldCapacity, Pit currentPit, Pit opponentPit) {
         Optional<Pit> probableStore = game.getBoard().getPits()
                 .stream()
                 .filter(pit -> pit.isStore() && pit.getPlayer().getPlayerId().equals(playerId))

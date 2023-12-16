@@ -6,11 +6,10 @@ import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.player.Champion;
 import com.bol.mancala.domain.model.player.Player;
 import com.bol.mancala.game.rule.basic.GameCommander;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Map;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
@@ -19,6 +18,7 @@ import static java.util.stream.Collectors.summingInt;
  * Forth Commander concrete class in chain
  * Responsible for finding the champion after each round of sow by player
  */
+@Slf4j
 public class ChampionCommander implements GameCommander {
 
     @Override
@@ -52,6 +52,7 @@ public class ChampionCommander implements GameCommander {
                     .collect(groupingBy(Pit::getPlayer, summingInt(Pit::getSeedCount)));
             Player champion = Collections.max(playerTotalSeedsGroupBy.entrySet(), Map.Entry.comparingByValue()).getKey();
             game.setChampion(new Champion(champion, playerTotalSeedsGroupBy.get(champion)));
+            log.info("Champion is: " + champion.getUserName() + " With Total Seed Of " + playerTotalSeedsGroupBy.get(champion));
         }
     }
 }

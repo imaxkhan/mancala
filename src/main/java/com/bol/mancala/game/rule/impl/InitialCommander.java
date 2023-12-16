@@ -8,18 +8,21 @@ import com.bol.mancala.domain.model.concept.Board;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.game.rule.basic.GameCommander;
 import com.bol.mancala.game.rule.validator.GameValidator;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
 /**
  * First Commander concrete class in chain
  */
+@Slf4j
 public class InitialCommander implements GameCommander, GameValidator {
 
     @Override
     public void play(Game game, PlayDto playDto) throws CustomException {
         checkGameStatus(game.getStatus());
         checkTurn(game.getBoard(), playDto.getPlayerId());
+        log.info("Player: " + playDto.getPlayerId() + " selected pit with index: " + playDto.getPitIndex());
     }
 
     /**
@@ -36,8 +39,7 @@ public class InitialCommander implements GameCommander, GameValidator {
     }
 
     /**
-     *
-     * @param board of the game
+     * @param board    of the game
      * @param playerId of picking the pit in his/her turn
      * @throws CustomException when player violate his/her turn
      */
