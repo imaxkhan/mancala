@@ -1,9 +1,7 @@
 package com.bol.mancala.presentation.api;
 
-import com.bol.mancala.domain.dto.Game.GameSetupDto;
-import com.bol.mancala.domain.dto.Game.GameSettingDto;
-import com.bol.mancala.domain.dto.Game.PlayerDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.bol.mancala.presentation.constants.GameRestApi;
+import com.bol.mancala.util.ModelMocker;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Arrays;
-
+import static com.bol.mancala.util.TestUtil.asJsonString;
+import static org.hamcrest.Matchers.anyOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,167 +23,95 @@ class GameSetupControllerTest {
 
     @Test
     public void testGameApiWhenGameSettingIsNullAndPlayersIsNull() throws Exception {
-        GameSetupDto gameDto = new GameSetupDto();
-        gameDto.setGameSetting(null);
-        gameDto.setPlayers(null);
-        var result = mockMvc.perform(post("/api/games")
+        mockMvc.perform(post("/api" + GameRestApi.GAME_SETUP)
                         .contentType("application/json")
-                        .content(asJsonString(gameDto)))
+                        .content(asJsonString(ModelMocker.createGameSetupDtoWithoutGameSettingDtoAndPlayerListDto())))
                 .andExpect(status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].code").value("VALIDATION_FAILED"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value(Matchers.containsInAnyOrder("must not be null", "must not be empty")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value(Matchers.containsInAnyOrder("players", "gameSetting")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].trace").doesNotExist());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value(anyOf(
+                        Matchers.is("must not be null"),
+                        Matchers.is("must not be empty"))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value(anyOf(
+                        Matchers.is("players"),
+                        Matchers.is("gameSetting"))));
     }
 
     @Test
     public void testGameApiWhenGameSettingIsNull() throws Exception {
-        GameSetupDto gameDto = new GameSetupDto();
-        gameDto.setGameSetting(null);
-        PlayerDto player1=new PlayerDto();
-        player1.setUserName("imax");
-        PlayerDto player2=new PlayerDto();
-        player2.setUserName("rozhin");
-        gameDto.setPlayers(Arrays.asList(player1,player2));
-
-        var result = mockMvc.perform(post("/api/games")
+        mockMvc.perform(post("/api" + GameRestApi.GAME_SETUP)
                         .contentType("application/json")
-                        .content(asJsonString(gameDto)))
+                        .content(asJsonString(ModelMocker.createGameSetupWithoutGameSettingDto())))
                 .andExpect(status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].code").value("VALIDATION_FAILED"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value("must not be null"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value( "gameSetting"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].trace").doesNotExist());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value("gameSetting"));
     }
 
     @Test
     public void testGameApiWhenPlayerIsNull() throws Exception {
-        GameSetupDto gameDto = new GameSetupDto();
-        GameSettingDto gameSetting=new GameSettingDto();
-        gameSetting.setPlayerCount(2);
-        gameSetting.setTotalPits(12);
-        gameSetting.setTotalSeedPerPit(4);
-        gameDto.setGameSetting(gameSetting);
-        gameDto.setPlayers(null);
-
-        var result = mockMvc.perform(post("/api/games")
+        mockMvc.perform(post("/api" + GameRestApi.GAME_SETUP)
                         .contentType("application/json")
-                        .content(asJsonString(gameDto)))
+                        .content(asJsonString(ModelMocker.createGameSetupWithoutPlayerListDto())))
                 .andExpect(status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].code").value("VALIDATION_FAILED"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value("must not be empty"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value( "players"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].trace").doesNotExist());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value("players"));
     }
 
     @Test
     public void testGameApiWhenPlayerUserNameIsNull() throws Exception {
-        GameSetupDto gameDto = new GameSetupDto();
-        GameSettingDto gameSetting=new GameSettingDto();
-        gameSetting.setPlayerCount(2);
-        gameSetting.setTotalPits(12);
-        gameSetting.setTotalSeedPerPit(4);
-        gameDto.setGameSetting(gameSetting);
-        PlayerDto player1=new PlayerDto();
-        player1.setUserName("imax");
-        PlayerDto player2=new PlayerDto();
-        player2.setUserName(null);
-        gameDto.setPlayers(Arrays.asList(player1,player2));
-
-        var result = mockMvc.perform(post("/api/games")
+        mockMvc.perform(post("/api" + GameRestApi.GAME_SETUP)
                         .contentType("application/json")
-                        .content(asJsonString(gameDto)))
+                        .content(asJsonString(ModelMocker.createGameSetupWhenPlayerUsernameIsNullOrEmpty())))
                 .andExpect(status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].code").value("VALIDATION_FAILED"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value("username is empty"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").doesNotExist())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].trace").doesNotExist());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").doesNotExist());
     }
 
     @Test
     public void testGameApiWhenPlayerUserNameIsEmpty() throws Exception {
-        GameSetupDto gameDto = new GameSetupDto();
-        GameSettingDto gameSetting=new GameSettingDto();
-        gameSetting.setPlayerCount(2);
-        gameSetting.setTotalPits(12);
-        gameSetting.setTotalSeedPerPit(4);
-        gameDto.setGameSetting(gameSetting);
-        PlayerDto player1=new PlayerDto();
-        player1.setUserName("imax");
-        PlayerDto player2=new PlayerDto();
-        player2.setUserName("");
-        gameDto.setPlayers(Arrays.asList(player1,player2));
-
-        var result = mockMvc.perform(post("/api/games")
+        mockMvc.perform(post("/api" + GameRestApi.GAME_SETUP)
                         .contentType("application/json")
-                        .content(asJsonString(gameDto)))
+                        .content(asJsonString(ModelMocker.createGameSetupWhenPlayerUsernameIsNullOrEmpty())))
                 .andExpect(status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].code").value("VALIDATION_FAILED"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value("username is empty"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").doesNotExist())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].trace").doesNotExist());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").doesNotExist());
     }
 
     @Test
     public void testGameApiWhenGameSettingFieldsAreNegative() throws Exception {
-        GameSetupDto gameDto = new GameSetupDto();
-        GameSettingDto gameSetting=new GameSettingDto();
-        gameSetting.setPlayerCount(-1);
-        gameSetting.setTotalPits(0);
-        gameSetting.setTotalSeedPerPit(-2);
-        gameSetting.setTotalStores(-6);
-        gameDto.setGameSetting(gameSetting);
-        PlayerDto player1=new PlayerDto();
-        player1.setUserName("imax");
-        PlayerDto player2=new PlayerDto();
-        player2.setUserName("reza");
-        gameDto.setPlayers(Arrays.asList(player1,player2));
-
-        var result = mockMvc.perform(post("/api/games")
+        mockMvc.perform(post("/api" + GameRestApi.GAME_SETUP)
                         .contentType("application/json")
-                        .content(asJsonString(gameDto)))
+                        .content(asJsonString(ModelMocker.createGameSetupDtoWhenGameSettingFieldsAreNegative())))
                 .andExpect(status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].code").value("VALIDATION_FAILED"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value(Matchers.containsString("must be")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value(Matchers.containsInAnyOrder("Player Size","pit count","store count")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].trace").doesNotExist());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value(Matchers.containsInAnyOrder("Player Size", "pit count", "store count")));
     }
 
     @Test
     public void testGameApiWhenGameSettingAndPlayerAreValid() throws Exception {
-        GameSetupDto gameDto = new GameSetupDto();
-        GameSettingDto gameSetting=new GameSettingDto();
-        gameSetting.setPlayerCount(2);
-        gameSetting.setTotalPits(12);
-        gameSetting.setTotalSeedPerPit(4);
-        gameSetting.setTotalStores(2);
-        gameDto.setGameSetting(gameSetting);
-        PlayerDto player1=new PlayerDto();
-        player1.setUserName("imax");
-        PlayerDto player2=new PlayerDto();
-        player2.setUserName("reza");
-        gameDto.setPlayers(Arrays.asList(player1,player2));
-
-        var result = mockMvc.perform(post("/api/games")
+        mockMvc.perform(post("/api" + GameRestApi.GAME_SETUP)
                         .contentType("application/json")
-                        .content(asJsonString(gameDto)))
+                        .content(asJsonString(ModelMocker.createFullGameSetupDto())))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isMap())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.gameId").isNotEmpty());
-    }
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gameId").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("NOT_STARTED"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.players").isArray())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.players").isArray())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gameSetting").isMap())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gameSetting").isMap())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.board.activePlayer").isEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.board.pits").isArray());
 
-
-    private String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

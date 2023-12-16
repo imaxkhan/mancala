@@ -3,6 +3,7 @@ package com.bol.mancala.presentation.api;
 import com.bol.mancala.base.exception.CustomException;
 import com.bol.mancala.domain.dto.play.PlayDto;
 import com.bol.mancala.domain.dto.play.PlayResultDto;
+import com.bol.mancala.presentation.constants.GameRestApi;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @RequestMapping("/api")
 public interface GamePlayController {
 
-    @PutMapping("/plays/{gameId}")
+    @PutMapping(GameRestApi.GAME_PLAY)
     ResponseEntity<PlayResultDto> play(@PathVariable("gameId") UUID gameId, @Valid @RequestBody PlayDto playDto) throws CustomException;
 
 }
