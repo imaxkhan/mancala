@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
 
+/**
+ * Api to select random player as starter of the game
+ */
 @RequestMapping("/api")
 public interface PlayerRandomPickController {
 

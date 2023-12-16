@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * A Request DTO being used as mediator in gameSetup Creation
+ */
 @Getter
 @Setter
 @NoArgsConstructor

@@ -40,6 +40,12 @@ public class Aspect {
          */
     }
 
+    /**
+     *
+     * @param joinPoint for all controller which their bodies or filter objects implement Ivalidation interface
+     *                  custom model based validation can be handled on overridden classes
+     * @throws CustomException
+     */
     @Before(value = "controller()")
     public void validate(JoinPoint joinPoint) throws CustomException {
         Object[] signatureArgs = joinPoint.getArgs();

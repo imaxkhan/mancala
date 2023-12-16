@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+/**
+ * An implementation of playing the game
+ * Command Invoker service is wired to
+ * handle all commander steps
+ * to manage game rules and scenarios
+ */
 @Service
 public class GamePlayServiceImpl implements GamePlayService {
     private final GameCommanderChain gameCommanderChain;
@@ -22,6 +28,13 @@ public class GamePlayServiceImpl implements GamePlayService {
         this.gameRepository = gameRepository;
     }
 
+    /**
+     *
+     * @param gameId
+     * @param playDto
+     * @return General Overview of the board after player sow on pits
+     * @throws CustomException when game not found
+     */
     @Override
     public PlayResultDto play(UUID gameId, PlayDto playDto) throws CustomException {
         Game game = gameRepository.findByGameId(gameId)

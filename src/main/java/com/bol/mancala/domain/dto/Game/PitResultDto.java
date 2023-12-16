@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * A Response DTO as mediator showing status of pits
+ * after play and gameSetup creation
+ */
 @Getter
 @Setter
 @NoArgsConstructor

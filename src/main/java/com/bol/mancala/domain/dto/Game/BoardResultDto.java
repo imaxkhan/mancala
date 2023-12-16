@@ -8,6 +8,10 @@ import lombok.Setter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A Response DTO responsible for showing
+ * player turn and all pit status regarding seedCount
+ */
 @Getter
 @Setter
 @NoArgsConstructor

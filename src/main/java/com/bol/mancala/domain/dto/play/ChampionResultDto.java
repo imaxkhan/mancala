@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * A Response mediator DTO for showing who is the winner of game
+ */
 @Getter
 @Setter
 @NoArgsConstructor

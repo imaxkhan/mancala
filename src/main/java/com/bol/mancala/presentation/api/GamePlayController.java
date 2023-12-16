@@ -1,7 +1,6 @@
 package com.bol.mancala.presentation.api;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.Game.GameDto;
 import com.bol.mancala.domain.dto.play.PlayDto;
 import com.bol.mancala.domain.dto.play.PlayResultDto;
 import jakarta.validation.Valid;
@@ -13,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
 
+/**
+ * Api for player pit selection
+ */
 @RequestMapping("/api")
 public interface GamePlayController {
 

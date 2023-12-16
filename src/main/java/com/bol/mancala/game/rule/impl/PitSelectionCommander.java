@@ -10,6 +10,10 @@ import com.bol.mancala.game.rule.validator.PitValidator;
 
 import java.util.UUID;
 
+/**
+ * second commander concrete class in chain
+ * handling the state and validation of selected pit by player
+ */
 public class PitSelectionCommander implements GameCommander, PitValidator {
 
     @Override
@@ -19,6 +23,14 @@ public class PitSelectionCommander implements GameCommander, PitValidator {
     }
 
 
+    /**
+     *
+     * @param game entity
+     * @param playerId of the game
+     * @param pitIndex unique identifier of pit
+     * @throws CustomException when player id of the pit
+     * is different from the one who is picking the seed form pit
+     */
     @Override
     public void checkOwner(Game game, UUID playerId, int pitIndex) throws CustomException {
         if (game.getBoard().getPits().get(pitIndex) != null) {
@@ -30,6 +42,12 @@ public class PitSelectionCommander implements GameCommander, PitValidator {
 
     }
 
+    /**
+     *
+     * @param game entity
+     * @param pitIndex unique identifier of pit
+     * @throws CustomException when selected pit is empty of seeds
+     */
     @Override
     public void checkCapacity(Game game, int pitIndex) throws CustomException {
         if (game.getBoard().getPits().get(pitIndex).getSeedCount() == 0) {
@@ -37,6 +55,12 @@ public class PitSelectionCommander implements GameCommander, PitValidator {
         }
     }
 
+    /**
+     *
+     * @param game entity
+     * @param pitIndex unique identifier of pit
+     * @throws CustomException when selected pit is store (big pit)
+     */
     @Override
     public void checkStore(Game game, int pitIndex) throws CustomException {
         if (game.getBoard().getPits().get(pitIndex).isStore()) {

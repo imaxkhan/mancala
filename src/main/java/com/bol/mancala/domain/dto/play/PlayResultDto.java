@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * A Response DTO for handling result after each player movement
+ */
 @Getter
 @Setter
 @NoArgsConstructor

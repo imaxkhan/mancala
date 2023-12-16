@@ -1,9 +1,8 @@
 package com.bol.mancala.presentation.api;
 
-import com.bol.mancala.domain.dto.Game.GameDto;
+import com.bol.mancala.domain.dto.Game.GameSetupDto;
 import com.bol.mancala.domain.dto.Game.GameSettingDto;
 import com.bol.mancala.domain.dto.Game.PlayerDto;
-import com.bol.mancala.domain.model.game.GameSetting;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ class GameSetupControllerTest {
 
     @Test
     public void testGameApiWhenGameSettingIsNullAndPlayersIsNull() throws Exception {
-        GameDto gameDto = new GameDto();
+        GameSetupDto gameDto = new GameSetupDto();
         gameDto.setGameSetting(null);
         gameDto.setPlayers(null);
         var result = mockMvc.perform(post("/api/games")
@@ -42,7 +41,7 @@ class GameSetupControllerTest {
 
     @Test
     public void testGameApiWhenGameSettingIsNull() throws Exception {
-        GameDto gameDto = new GameDto();
+        GameSetupDto gameDto = new GameSetupDto();
         gameDto.setGameSetting(null);
         PlayerDto player1=new PlayerDto();
         player1.setUserName("imax");
@@ -63,7 +62,7 @@ class GameSetupControllerTest {
 
     @Test
     public void testGameApiWhenPlayerIsNull() throws Exception {
-        GameDto gameDto = new GameDto();
+        GameSetupDto gameDto = new GameSetupDto();
         GameSettingDto gameSetting=new GameSettingDto();
         gameSetting.setPlayerCount(2);
         gameSetting.setTotalPits(12);
@@ -84,7 +83,7 @@ class GameSetupControllerTest {
 
     @Test
     public void testGameApiWhenPlayerUserNameIsNull() throws Exception {
-        GameDto gameDto = new GameDto();
+        GameSetupDto gameDto = new GameSetupDto();
         GameSettingDto gameSetting=new GameSettingDto();
         gameSetting.setPlayerCount(2);
         gameSetting.setTotalPits(12);
@@ -109,7 +108,7 @@ class GameSetupControllerTest {
 
     @Test
     public void testGameApiWhenPlayerUserNameIsEmpty() throws Exception {
-        GameDto gameDto = new GameDto();
+        GameSetupDto gameDto = new GameSetupDto();
         GameSettingDto gameSetting=new GameSettingDto();
         gameSetting.setPlayerCount(2);
         gameSetting.setTotalPits(12);
@@ -134,7 +133,7 @@ class GameSetupControllerTest {
 
     @Test
     public void testGameApiWhenGameSettingFieldsAreNegative() throws Exception {
-        GameDto gameDto = new GameDto();
+        GameSetupDto gameDto = new GameSetupDto();
         GameSettingDto gameSetting=new GameSettingDto();
         gameSetting.setPlayerCount(-1);
         gameSetting.setTotalPits(0);
@@ -160,7 +159,7 @@ class GameSetupControllerTest {
 
     @Test
     public void testGameApiWhenGameSettingAndPlayerAreValid() throws Exception {
-        GameDto gameDto = new GameDto();
+        GameSetupDto gameDto = new GameSetupDto();
         GameSettingDto gameSetting=new GameSettingDto();
         gameSetting.setPlayerCount(2);
         gameSetting.setTotalPits(12);

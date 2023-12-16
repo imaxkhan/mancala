@@ -16,9 +16,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Global Exception Handler that handle custom handled and unhandled exceptions
+ */
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
+    /**
+     *
+     * @param exception Custom exception being thrown will be caught here
+     * @param response Manipulating servlet response status code here
+     * @return Always return exception as array even with single object
+     */
     @ExceptionHandler(CustomException.class)
     public List<CustomErrorResult> handleCustomException(CustomException exception, HttpServletResponse response) {
         response.setStatus(exception.getCode().getValue());
@@ -28,6 +37,13 @@ public class ControllerExceptionHandler {
         return Collections.singletonList(new CustomErrorResult(exception));
     }
 
+    /**
+     *
+     * @param exception MethodArgumentNotValidException exception being thrown will be caught here
+     *                  specially for validation errors
+     * @param response Manipulating servlet response status code here
+     * @return Always return exception as array even with single object
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public List<CustomErrorResult> handleValidationExceptions(MethodArgumentNotValidException exception, HttpServletResponse response) {
         List<CustomErrorResult> customErrorResultBucket = new ArrayList<>();
@@ -41,6 +57,13 @@ public class ControllerExceptionHandler {
         return customErrorResultBucket;
     }
 
+    /**
+     *
+     * @param exception MethodArgumentTypeMismatch exception being thrown will be caught here
+     *                  specially for validation errors
+     * @param response Manipulating servlet response status code here
+     * @return Always return exception as array even with single object
+     */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public List<CustomErrorResult> handleMethodArgumentTypeMismatchExceptions(MethodArgumentTypeMismatchException exception, HttpServletResponse response) {
         List<CustomErrorResult> customErrorResultBucket = new ArrayList<>();
@@ -49,15 +72,13 @@ public class ControllerExceptionHandler {
         return customErrorResultBucket;
     }
 
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public List<CustomErrorResult> handleAccessDeniedException(AccessDeniedException exception, HttpServletResponse response) {
-        List<CustomErrorResult> customErrorResultBucket = new ArrayList<>();
-        response.setStatus(CustomErrorCode.UNAUTHORIZED.getValue());
-        customErrorResultBucket.add(new CustomErrorResult(CustomErrorCode.UNAUTHORIZED, exception.getMessage(), null));
-        return customErrorResultBucket;
-    }
-
+    /**
+     *
+     * @param exception HttpMessageNotReadable exception being thrown will be caught here
+     *                  specially for validation errors
+     * @param response Manipulating servlet response status code here
+     * @return Always return exception as array even with single object
+     */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public List<CustomErrorResult> handleHttpRequestFormatException(HttpMessageNotReadableException exception, HttpServletResponse response) {
         List<CustomErrorResult> customErrorResultBucket = new ArrayList<>();
@@ -66,6 +87,13 @@ public class ControllerExceptionHandler {
         return customErrorResultBucket;
     }
 
+    /**
+     *
+     * @param exception Exception that are not handled ,will be handled here with custom exception
+     * @param response Manipulating servlet response status code here
+     * @return simple exception object
+     */
+    // TODO: 12/16/23 do we need change this to array?
     @ExceptionHandler(Exception.class)
     public CustomErrorResult handleUnHandledException(Exception exception, HttpServletResponse response) {
         exception.printStackTrace();

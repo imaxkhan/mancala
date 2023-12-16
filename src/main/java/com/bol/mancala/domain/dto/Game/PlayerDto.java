@@ -3,13 +3,15 @@ package com.bol.mancala.domain.dto.Game;
 import com.bol.mancala.base.config.oop.IValidation;
 import com.bol.mancala.base.exception.CustomErrorCode;
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.base.util.NotBlankOrNull;
 import com.bol.mancala.domain.model.player.Player;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * A Request mediator DTO for gameSetup creation for players
+ */
 @Getter
 @Setter
 @NoArgsConstructor

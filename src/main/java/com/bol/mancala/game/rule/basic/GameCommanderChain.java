@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * invoker or aggregator class
+ * which is based on command design pattern
+ * weaving all responsible class in a sorted manner
+ */
 @Service
 public class GameCommanderChain {
     private final List<GameCommander> executors;
@@ -16,7 +21,7 @@ public class GameCommanderChain {
         executors = List.of(
                 new InitialCommander(),
                 new PitSelectionCommander(),
-                new SeedStowCommander(),
+                new SeedSowCommander(),
                 new ChampionCommander(),
                 new FinishCommander()
         );

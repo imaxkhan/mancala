@@ -6,6 +6,10 @@ import com.bol.mancala.domain.model.concept.Board;
 
 import java.util.UUID;
 
+/**
+ * A contract for any other class wish
+ * to implement game check scenarios before pick and sow
+ */
 public interface GameValidator {
     void checkGameStatus(GameStatus status) throws CustomException;
 

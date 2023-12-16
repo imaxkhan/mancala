@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+/**
+ * A Response DTO for showing the result of player in random manner( dice)
+ */
 @Getter
 @Setter
 @NoArgsConstructor

@@ -4,8 +4,8 @@ import com.bol.mancala.base.config.properties.ApplicationProperties;
 import com.bol.mancala.base.exception.CustomErrorCode;
 import com.bol.mancala.base.exception.CustomErrorResult;
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.Game.GameDto;
-import com.bol.mancala.domain.dto.Game.GameResultDto;
+import com.bol.mancala.domain.dto.Game.GameSetupDto;
+import com.bol.mancala.domain.dto.Game.GameSetupResultDto;
 import com.bol.mancala.domain.dto.Game.GameSettingDto;
 import com.bol.mancala.domain.dto.Game.PlayerDto;
 import com.bol.mancala.domain.model.concept.Board;
@@ -26,6 +26,11 @@ import java.util.stream.Collectors;
 
 import static com.bol.mancala.base.util.GeneralUtility.validateProperty;
 
+/**
+ * Responsible for managing gameSetup creation,player registration
+ * and initializing game board
+ * and validating game physical concept rules
+ */
 @Service
 public class GameSetupServiceImpl implements GameSetupService, GameGeneratorService {
 
@@ -37,16 +42,24 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
         this.applicationProperties = applicationProperties;
     }
 
-    public GameResultDto createGame(GameDto gameDto) throws CustomException {
+    /**
+     *
+     * @param gameDto request for creating gameSetup
+     * @return GameSetupResult including all game information
+     * @throws CustomException by inner validator methods
+     */
+    public GameSetupResultDto createGame(GameSetupDto gameDto) throws CustomException {
         this.validateGameSetting(gameDto.getGameSetting());
         this.validatePlayer(gameDto.getPlayers());
         GameSetting gameSetting = this.createGameSetting(gameDto.getGameSetting());
         List<Player> players = this.createPlayers(gameDto.getPlayers());
         Game game = gameRepository.saveOrUpdate(new Game(gameSetting, players));
         this.initializeGame(game);
-        return new GameResultDto(game);
+        return new GameSetupResultDto(game);
     }
 
+
+    //checking game setting with preconfigured properties in bootstrap
     @Override
     public void validateGameSetting(GameSettingDto gameSetting) throws CustomException {
         List<CustomErrorResult> customErrorResults = new ArrayList<>();
@@ -61,6 +74,7 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
         }
     }
 
+    //check size of player with predefined properties
     @Override
     public void validatePlayer(List<PlayerDto> players) throws CustomException {
         if (players.size() != applicationProperties.getPlayerCountLimit()) {
@@ -69,6 +83,7 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
 
     }
 
+    //model builder for GameSetting entity
     @Override
     public GameSetting createGameSetting(GameSettingDto gameSettingDto) {
         return GameSetting.builder()
@@ -82,6 +97,7 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
                 .build();
     }
 
+    //model builder for player entity
     @Override
     public List<Player> createPlayers(List<PlayerDto> playerDtoBucket) {
         return playerDtoBucket.stream().map(playerDto -> Player.builder()
@@ -91,6 +107,13 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
                 .collect(Collectors.toList());
     }
 
+    /**
+     * important method that generate board pits,stores,seeds for each players
+     * pit index start from zero till total pit count
+     * also stores here are pit and have an index after own pits
+     * at end generated pits will be added as board entity to game entity
+     * @param game
+     */
     @Override
     public void initializeGame(Game game) {
         int totalPitPerPlayer = game.getGameSetting().getTotalPitPerPlayer();

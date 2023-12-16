@@ -9,6 +9,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * in-memory implementation of game repository
+ */
 @Repository("GM-IM-RP")
 public class InMemoryGameRepositoryImpl implements GameRepository {
 

@@ -12,6 +12,10 @@ import java.util.Map;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
 
+/**
+ * Forth Commander concrete class in chain
+ * Responsible for finding the champion after each round of sow by player
+ */
 public class ChampionCommander implements GameCommander {
 
     @Override
@@ -19,6 +23,14 @@ public class ChampionCommander implements GameCommander {
         checkChampion(game);
     }
 
+    /**
+     * finding empty pits in each side of the board except store
+     * first player who makes his pits empty will trigger ending of the game
+     * but this does not mean to be winner
+     * so pits will be group by player and non-store pits
+     * the player with most seeds including seeds in stores is winner
+     * @param game
+     */
     private void checkChampion(Game game) {
         Map<Player, Integer> seedCountPerPitGroupByPlayer = game.getBoard().getPits()
                 .stream()

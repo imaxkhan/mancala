@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * An entity for showing the winner of the game
+ */
 @Getter
 @Setter
 @NoArgsConstructor

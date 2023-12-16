@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+/**
+ * A Response DTO as mediator in gameSetup Creation,Player Random Pick And Game Play
+ */
 @Getter
 @Setter
 @NoArgsConstructor

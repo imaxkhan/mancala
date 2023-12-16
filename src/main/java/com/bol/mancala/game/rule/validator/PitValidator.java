@@ -5,6 +5,10 @@ import com.bol.mancala.domain.model.game.Game;
 
 import java.util.UUID;
 
+/**
+ * A contract for any other class wish
+ * to implement Pit sow and selection scenarios
+ */
 public interface PitValidator {
     void checkOwner(Game game, UUID playerId, int pitIndex) throws CustomException;
 

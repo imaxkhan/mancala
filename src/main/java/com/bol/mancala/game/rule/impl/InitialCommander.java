@@ -11,6 +11,9 @@ import com.bol.mancala.game.rule.validator.GameValidator;
 
 import java.util.UUID;
 
+/**
+ * First Commander concrete class in chain
+ */
 public class InitialCommander implements GameCommander, GameValidator {
 
     @Override
@@ -19,6 +22,10 @@ public class InitialCommander implements GameCommander, GameValidator {
         checkTurn(game.getBoard(), playDto.getPlayerId());
     }
 
+    /**
+     * @param status as input
+     * @throws CustomException on game not in running state
+     */
     @Override
     public void checkGameStatus(GameStatus status) throws CustomException {
         if (status.equals(GameStatus.NOT_STARTED)) {
@@ -28,6 +35,12 @@ public class InitialCommander implements GameCommander, GameValidator {
         }
     }
 
+    /**
+     *
+     * @param board of the game
+     * @param playerId of picking the pit in his/her turn
+     * @throws CustomException when player violate his/her turn
+     */
     @Override
     public void checkTurn(Board board, UUID playerId) throws CustomException {
         if (!board.getActivePlayer().getPlayerId().equals(playerId)) {
