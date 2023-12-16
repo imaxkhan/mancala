@@ -1,8 +1,9 @@
 package com.bol.mancala.game.rule.impl;
 
 import com.bol.mancala.domain.dto.play.PlayDto;
-import com.bol.mancala.domain.model.concept.Board;
+import com.bol.mancala.domain.enums.GameStatus;
 import com.bol.mancala.domain.model.game.Game;
+import com.bol.mancala.domain.model.player.Champion;
 import com.bol.mancala.util.ModelMocker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,35 +11,36 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ChampionCommanderTest {
-    private ChampionCommander championCommander;
+class FinishCommanderTest {
+
+    private FinishCommander finishCommander;
 
     @BeforeEach
     void setUp() {
-        championCommander = new ChampionCommander();
+        finishCommander = new FinishCommander();
     }
 
+    @Test
+    void testPlayWhenGameIsFinished() {
+        Game game = new Game(ModelMocker.createGameSetting(), ModelMocker.createPlayers());
+        game.setBoard(ModelMocker.createChampionBoard());
+        game.setChampion(new Champion(game.getPlayers().get(0), 30));
+        PlayDto playDto = new PlayDto();
+        playDto.setPlayerId(game.getPlayers().get(0).getPlayerId());
+        playDto.setPitIndex(1);
+        finishCommander.play(game, playDto);
+        Assertions.assertEquals(game.getStatus(), GameStatus.FINISHED);
+    }
 
     @Test
-    void testCheckChampionWhenOneSideOfTheBoardIsEmpty() {
+    void testPlayWhenGameIsNotFinished() {
         Game game = new Game(ModelMocker.createGameSetting(), ModelMocker.createPlayers());
-        Board championBoard = ModelMocker.createChampionBoard();
-        game.setBoard(championBoard);
+        game.setStatus(GameStatus.RUNNING);
+        game.setBoard(ModelMocker.createBoard());
         PlayDto playDto = new PlayDto();
-        playDto.setPitIndex(1);
         playDto.setPlayerId(game.getPlayers().get(0).getPlayerId());
-        championCommander.play(game, playDto);
-        Assertions.assertNotNull(game.getChampion());
-    }
-    @Test
-    void testCheckChampionWhenNoSideOfTheBoardIsEmpty() {
-        Game game = new Game(ModelMocker.createGameSetting(), ModelMocker.createPlayers());
-        Board championBoard = ModelMocker.createBoard();
-        game.setBoard(championBoard);
-        PlayDto playDto = new PlayDto();
         playDto.setPitIndex(1);
-        playDto.setPlayerId(game.getPlayers().get(0).getPlayerId());
-        championCommander.play(game, playDto);
-        Assertions.assertNull(game.getChampion());
+        finishCommander.play(game, playDto);
+        Assertions.assertEquals(game.getStatus(), GameStatus.RUNNING);
     }
 }

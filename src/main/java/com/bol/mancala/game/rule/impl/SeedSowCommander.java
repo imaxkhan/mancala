@@ -6,6 +6,7 @@ import com.bol.mancala.domain.model.concept.Pit;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.player.Player;
 import com.bol.mancala.game.rule.basic.GameCommander;
+import com.bol.mancala.game.rule.basic.container.LastPitContainerInfo;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -17,9 +18,9 @@ import java.util.UUID;
 public class SeedSowCommander implements GameCommander {
 
     @Override
-    public void play(Game game, PlayDto playDto) throws CustomException {
-        int lastIndex = this.stow(game, playDto.getPitIndex(), playDto.getPlayerId());
-        this.checkLastStow(game, playDto.getPlayerId(), lastIndex);
+    public void play(Game game, PlayDto playDto) {
+        LastPitContainerInfo lastSowInfo = this.sow(game, playDto.getPitIndex(), playDto.getPlayerId());
+        this.checkLastStow(game, playDto.getPlayerId(), lastSowInfo);
     }
 
     /**
@@ -32,12 +33,13 @@ public class SeedSowCommander implements GameCommander {
      * @return lastIndex of pit when all seeds are sowed
      * @throws CustomException when inner methods decide
      */
-    private int stow(Game game, int pitIndex, UUID playerId) throws CustomException {
+    public LastPitContainerInfo sow(Game game, int pitIndex, UUID playerId) {
         Pit pit = game.getBoard().getPits().get(pitIndex);
         int seedCount = pit.getSeedCount();
         pit.setSeedCount(0);
         int currentIndex = pitIndex;
 
+        int lastIndexOldSeedCount = 0;
         for (int i = 0; i < seedCount; i++) {
             currentIndex = (currentIndex + 1) % (game.getGameSetting().getTotalPits() + game.getGameSetting().getTotalStores());
             Pit nextPit = game.getBoard().getPits().get(currentIndex);
@@ -46,9 +48,10 @@ public class SeedSowCommander implements GameCommander {
                 i--;
                 continue;
             }
+            lastIndexOldSeedCount = nextPit.getSeedCount();
             nextPit.setSeedCount(nextPit.getSeedCount() + 1);
         }
-        return currentIndex;
+        return new LastPitContainerInfo(currentIndex, lastIndexOldSeedCount);
     }
 
     /**
@@ -57,30 +60,30 @@ public class SeedSowCommander implements GameCommander {
      *
      * @param game
      * @param playerId
-     * @param lastIndex last pit index after sowing the seeds
+     * @param lastIndexInfo last pit index and old capacity of last pit
      */
-    private void checkLastStow(Game game, UUID playerId, int lastIndex) {
-        Pit pit = game.getBoard().getPits().get(lastIndex);
+    private void checkLastStow(Game game, UUID playerId, LastPitContainerInfo lastIndexInfo) {
+        Pit pit = game.getBoard().getPits().get(lastIndexInfo.getCurrentIndex());
         if (pit.isStore() && pit.getPlayer().getPlayerId().equals(playerId)) {
             System.out.println("ur turn again");
         } else {
-            handleLastSowOnOwnPit(game, pit, playerId);
+            handleLastSowOnOwnPit(game, pit, lastIndexInfo.getOldSeedCount(), playerId);
         }
     }
 
     /**
-     * if last pit its own pit and is empty
-     * gather opposite index of opponent seeds and stow them in own store
-     * if last pit is not empty on own pit then change player turn
-     *
+     *      * if last pit its own pit and is empty
+     *      * gather opposite index of opponent seeds and stow them in own store
+     *      * if last pit is not empty on own pit then change player turn
      * @param game
-     * @param pit
+     * @param currentPit
+     * @param oldCapacity before updating
      * @param playerId
      */
-    private void handleLastSowOnOwnPit(Game game, Pit pit, UUID playerId) {
-        if (pit.getPlayer().getPlayerId().equals(playerId) && pit.getSeedCount() == 0) {
-            int oppositePitIndex = getOppositePitIndex(game.getGameSetting().getTotalPits(), pit.getIndex());
-            captureAllGainedSeeds(game, playerId, pit, game.getBoard().getPits().get(oppositePitIndex));
+    private void handleLastSowOnOwnPit(Game game, Pit currentPit, int oldCapacity, UUID playerId) {
+        if (currentPit.getPlayer().getPlayerId().equals(playerId) && oldCapacity == 0) {
+            int oppositePitIndex = getOppositePitIndex(game.getGameSetting().getTotalPits(), currentPit.getIndex());
+            captureAllGainedSeeds(game, playerId, oldCapacity,currentPit, game.getBoard().getPits().get(oppositePitIndex));
         } else {
             changeTurn(game, playerId);
         }
@@ -106,13 +109,13 @@ public class SeedSowCommander implements GameCommander {
      * @param currentPit
      * @param opponentPit
      */
-    private void captureAllGainedSeeds(Game game, UUID playerId, Pit currentPit, Pit opponentPit) {
+    private void captureAllGainedSeeds(Game game, UUID playerId, int currentPitOldCapacity,Pit currentPit, Pit opponentPit) {
         Optional<Pit> probableStore = game.getBoard().getPits()
                 .stream()
                 .filter(pit -> pit.isStore() && pit.getPlayer().getPlayerId().equals(playerId))
                 .findFirst();
         probableStore.ifPresent(store -> {
-            if (currentPit.getSeedCount() == 0) {
+            if (currentPitOldCapacity == 0) {
                 store.setSeedCount(store.getSeedCount() + opponentPit.getSeedCount() + 1);
                 currentPit.setSeedCount(0);
                 opponentPit.setSeedCount(0);
@@ -127,7 +130,7 @@ public class SeedSowCommander implements GameCommander {
      * @param currentPitIndex last index of pit after complete sow
      * @return the counter side of own pit in opponent arena
      */
-    private int getOppositePitIndex(int totalPits, int currentPitIndex) {
+    public static int getOppositePitIndex(int totalPits, int currentPitIndex) {
         return totalPits - currentPitIndex;
     }
 }

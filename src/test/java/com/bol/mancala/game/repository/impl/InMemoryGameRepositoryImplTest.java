@@ -18,6 +18,7 @@ class InMemoryGameRepositoryImplTest {
     @Test
     void testSaveOrUpdate() {
         Game entity = new Game();
+        entity.setGameId(UUID.randomUUID());
         Game createdEntity = repository.saveOrUpdate(entity);
         assertEquals(entity, createdEntity);
     }

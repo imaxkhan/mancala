@@ -190,18 +190,57 @@ public class ModelMocker {
             opponentPit.setStore(false);
             opponentPit.setPlayer(players.get(1));
             opponentPit.setIndex(i);
-            pits.add(pit);
+            pits.add(opponentPit);
         }
         Pit opponentPit = new Pit();
         opponentPit.setIndex(13);
         opponentPit.setStore(true);
         opponentPit.setSeedCount(0);
         opponentPit.setPlayer(players.get(1));
-        pits.add(pit);
+        pits.add(opponentPit);
 
         board.setPits(pits);
         return board;
     }
 
+    public static Board createChampionBoard() {
+        List<Player> players = createPlayers();
+        Player playerOne = players.get(0);
+        Player playerTwo = players.get(1);
+        Board board = new Board();
+        board.setActivePlayer(null);
+        List<Pit> pits = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            Pit pit = new Pit();
+            pit.setSeedCount(0);
+            pit.setStore(false);
+            pit.setPlayer(playerOne);
+            pit.setIndex(i);
+            pits.add(pit);
+        }
+        Pit pit = new Pit();
+        pit.setIndex(6);
+        pit.setStore(true);
+        pit.setSeedCount(30);
+        pit.setPlayer(playerOne);
+        pits.add(pit);
+        for (int i = 7; i < 13; i++) {
+            Pit opponentPit = new Pit();
+            opponentPit.setSeedCount(3);
+            opponentPit.setStore(false);
+            opponentPit.setPlayer(playerTwo);
+            opponentPit.setIndex(i);
+            pits.add(opponentPit);
+        }
+        Pit opponentPit = new Pit();
+        opponentPit.setIndex(13);
+        opponentPit.setStore(true);
+        opponentPit.setSeedCount(0);
+        opponentPit.setPlayer(playerTwo);
+        pits.add(opponentPit);
 
+        board.setPits(pits);
+        return board;
+    }
 }
+

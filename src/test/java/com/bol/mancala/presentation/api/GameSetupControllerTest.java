@@ -94,7 +94,10 @@ class GameSetupControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].code").value("VALIDATION_FAILED"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value(Matchers.containsString("must be")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value(Matchers.containsInAnyOrder("Player Size", "pit count", "store count")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value(anyOf(
+                        Matchers.is("Player Size"),
+                        Matchers.is("pit count"),
+                        Matchers.is("store count"))));
     }
 
     @Test

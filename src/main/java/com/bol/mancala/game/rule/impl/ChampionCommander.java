@@ -7,7 +7,10 @@ import com.bol.mancala.domain.model.player.Champion;
 import com.bol.mancala.domain.model.player.Player;
 import com.bol.mancala.game.rule.basic.GameCommander;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
@@ -29,6 +32,7 @@ public class ChampionCommander implements GameCommander {
      * but this does not mean to be winner
      * so pits will be group by player and non-store pits
      * the player with most seeds including seeds in stores is winner
+     *
      * @param game
      */
     private void checkChampion(Game game) {
@@ -36,16 +40,18 @@ public class ChampionCommander implements GameCommander {
                 .stream()
                 .filter(pit -> !pit.isStore())
                 .collect(groupingBy(Pit::getPlayer, summingInt(Pit::getSeedCount)));
-        Player champion = null;
+        boolean finished = false;
         for (Player player : seedCountPerPitGroupByPlayer.keySet()) {
             if (seedCountPerPitGroupByPlayer.get(player) == 0) {
-                champion = player;
+                finished = true;
             }
         }
-        if (champion != null) {
-            int totalSeeds = game.getBoard().getPits().stream()
-                    .map(Pit::getSeedCount).mapToInt(Integer::intValue).sum();
-            game.setChampion(new Champion(champion, totalSeeds));
+        if (finished) {
+            Map<Player, Integer> playerTotalSeedsGroupBy = game.getBoard().getPits()
+                    .stream()
+                    .collect(groupingBy(Pit::getPlayer, summingInt(Pit::getSeedCount)));
+            Player champion = Collections.max(playerTotalSeedsGroupBy.entrySet(), Map.Entry.comparingByValue()).getKey();
+            game.setChampion(new Champion(champion, playerTotalSeedsGroupBy.get(champion)));
         }
     }
 }
