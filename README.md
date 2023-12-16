@@ -6,8 +6,7 @@ Mancala is a game where players "sow" and "capture" seeds.The objective is to ca
 ## Rules
 Setup:
 
-    Each player controls the six pits on their side of the board and the Mancala to their right.
-    Place four stones or seeds in each of the 12 small pits.
+ Each player controls the six pits on their side of the board and the Mancala to their right. Place four stones or seeds in each of the 12 small pits.
 
 Game Play:
 
@@ -417,7 +416,8 @@ Response Body
 
 ## Language and framework
 
-- Springboot
+- Springboot v3.2.6
+- spring v6.1.1
 - OpenJdk 17 or higher
 - build system Maven
 
