@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+
+  mancala:
+    container_name: mancala-api
+    image: regymi-api:0.0.1
+    volumes:
+      - mancala-data:/app
+    build: .
+    mem_limit: 512M
+    mem_reservation: 256M
+    cpus: 1
+    ports:
+      - "8080:8080"
+volumes:
+  mancala-data:

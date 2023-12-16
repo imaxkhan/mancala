@@ -23,5 +23,5 @@ game:
 
 logging:
   level:
-    root: info
-    org.springframework.web: debug
+    com:
+      bol: debug
