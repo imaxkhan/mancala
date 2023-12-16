@@ -13,5 +13,5 @@ public interface GameGeneratorService {
 
     List<Player> createPlayers(List<PlayerDto> playerDtoBucket);
 
-    void initializeGame(Game game);
+    Game initializeGame(Game game);
 }

@@ -19,6 +19,7 @@ public class PitSelectionCommander implements GameCommander, PitValidator {
     @Override
     public void play(Game game, PlayDto playDto) throws CustomException {
         this.checkOwner(game, playDto.getPlayerId(), playDto.getPitIndex());
+        this.checkStore(game,playDto.getPitIndex());
         this.checkCapacity(game, playDto.getPitIndex());
     }
 

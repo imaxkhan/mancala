@@ -2,9 +2,7 @@ package com.bol.mancala.domain.dto.Game;
 
 import com.bol.mancala.domain.model.game.GameSetting;
 import jakarta.validation.constraints.Min;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * A Request DTO being used as mediator in gameSetup Creation
@@ -32,5 +30,13 @@ public class GameSettingDto {
             this.playerCount = gameSetting.getPlayerCount();
             this.totalPitPerPlayer = gameSetting.getTotalPitPerPlayer();
         }
+    }
+
+    public GameSettingDto(int totalPits, int totalStores, int totalSeedPerPit, int playerCount, int totalPitPerPlayer) {
+        this.totalPits = totalPits;
+        this.totalStores = totalStores;
+        this.totalSeedPerPit = totalSeedPerPit;
+        this.playerCount = playerCount;
+        this.totalPitPerPlayer = totalPitPerPlayer;
     }
 }

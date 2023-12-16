@@ -29,7 +29,6 @@ public class GamePlayServiceImpl implements GamePlayService {
     }
 
     /**
-     *
      * @param gameId
      * @param playDto
      * @return General Overview of the board after player sow on pits
@@ -38,7 +37,7 @@ public class GamePlayServiceImpl implements GamePlayService {
     @Override
     public PlayResultDto play(UUID gameId, PlayDto playDto) throws CustomException {
         Game game = gameRepository.findByGameId(gameId)
-                .orElseThrow(() -> new CustomException(CustomErrorCode.VALIDATION_FAILED, "Game not found"));
+                .orElseThrow(() -> new CustomException(CustomErrorCode.ENTITY_NOT_FOUND, "Data not found"));
         gameCommanderChain.play(game, playDto);
         return new PlayResultDto(game);
     }

@@ -81,7 +81,6 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
         if (players.size() != applicationProperties.getPlayerCountLimit()) {
             throw new CustomException(CustomErrorCode.VALIDATION_FAILED, "player count must be " + applicationProperties.getPlayerCountLimit());
         }
-
     }
 
     //model builder for GameSetting entity
@@ -116,7 +115,7 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
      * @param game
      */
     @Override
-    public void initializeGame(Game game) {
+    public Game initializeGame(Game game) {
         int totalPitPerPlayer = game.getGameSetting().getTotalPitPerPlayer();
         Board board = new Board();
         board.setActivePlayer(null);
@@ -143,5 +142,6 @@ public class GameSetupServiceImpl implements GameSetupService, GameGeneratorServ
         }
         board.setPits(pits);
         game.setBoard(board);
+        return game;
     }
 }
