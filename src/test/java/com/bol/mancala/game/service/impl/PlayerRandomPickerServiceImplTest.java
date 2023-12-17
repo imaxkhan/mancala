@@ -1,7 +1,7 @@
 package com.bol.mancala.game.service.impl;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayerRandomPickResultDto;
+import com.bol.mancala.domain.dto.play.dice.PlayerRandomPickResultDto;
 import com.bol.mancala.domain.enums.GameStatus;
 import com.bol.mancala.domain.model.concept.Board;
 import com.bol.mancala.domain.model.game.Game;

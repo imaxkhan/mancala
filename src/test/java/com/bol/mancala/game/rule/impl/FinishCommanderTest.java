@@ -1,6 +1,6 @@
 package com.bol.mancala.game.rule.impl;
 
-import com.bol.mancala.domain.dto.play.PlayDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
 import com.bol.mancala.domain.enums.GameStatus;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.player.Champion;
@@ -28,7 +28,7 @@ class FinishCommanderTest {
         PlayDto playDto = new PlayDto();
         playDto.setPlayerId(game.getPlayers().get(0).getPlayerId());
         playDto.setPitIndex(1);
-        finishCommander.play(game, playDto);
+        finishCommander.action(game, playDto);
         Assertions.assertEquals(game.getStatus(), GameStatus.FINISHED);
     }
 
@@ -40,7 +40,7 @@ class FinishCommanderTest {
         PlayDto playDto = new PlayDto();
         playDto.setPlayerId(game.getPlayers().get(0).getPlayerId());
         playDto.setPitIndex(1);
-        finishCommander.play(game, playDto);
+        finishCommander.action(game, playDto);
         Assertions.assertEquals(game.getStatus(), GameStatus.RUNNING);
     }
 }

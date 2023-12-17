@@ -2,7 +2,7 @@ package com.bol.mancala.game.rule.impl;
 
 import com.bol.mancala.base.exception.CustomErrorCode;
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
 import com.bol.mancala.domain.enums.GameStatus;
 import com.bol.mancala.domain.model.concept.Board;
 import com.bol.mancala.domain.model.game.Game;
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class InitialCommander implements GameCommander, GameValidator {
 
     @Override
-    public void play(Game game, PlayDto playDto) throws CustomException {
+    public void action(Game game, PlayDto playDto) throws CustomException {
         checkGameStatus(game.getStatus());
         checkTurn(game.getBoard(), playDto.getPlayerId());
         log.info("Player: " + playDto.getPlayerId() + " selected pit with index: " + playDto.getPitIndex());

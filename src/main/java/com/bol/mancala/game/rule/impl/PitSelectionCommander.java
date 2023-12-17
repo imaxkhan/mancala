@@ -2,7 +2,7 @@ package com.bol.mancala.game.rule.impl;
 
 import com.bol.mancala.base.exception.CustomErrorCode;
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
 import com.bol.mancala.domain.model.concept.Pit;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.game.rule.basic.GameCommander;
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class PitSelectionCommander implements GameCommander, PitValidator {
 
     @Override
-    public void play(Game game, PlayDto playDto) throws CustomException {
+    public void action(Game game, PlayDto playDto) throws CustomException {
         this.checkOwner(game, playDto.getPlayerId(), playDto.getPitIndex());
         this.checkStore(game,playDto.getPitIndex());
         this.checkCapacity(game, playDto.getPitIndex());

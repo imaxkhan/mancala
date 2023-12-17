@@ -1,6 +1,6 @@
 package com.bol.mancala.game.rule.impl;
 
-import com.bol.mancala.domain.dto.play.PlayDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
 import com.bol.mancala.domain.model.concept.Board;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.util.ModelMocker;
@@ -27,7 +27,7 @@ class ChampionCommanderTest {
         PlayDto playDto = new PlayDto();
         playDto.setPitIndex(1);
         playDto.setPlayerId(game.getPlayers().get(0).getPlayerId());
-        championCommander.play(game, playDto);
+        championCommander.action(game, playDto);
         Assertions.assertNotNull(game.getChampion());
     }
     @Test
@@ -38,7 +38,7 @@ class ChampionCommanderTest {
         PlayDto playDto = new PlayDto();
         playDto.setPitIndex(1);
         playDto.setPlayerId(game.getPlayers().get(0).getPlayerId());
-        championCommander.play(game, playDto);
+        championCommander.action(game, playDto);
         Assertions.assertNull(game.getChampion());
     }
 }

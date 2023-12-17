@@ -1,10 +1,10 @@
 package com.bol.mancala.game.service;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.Game.GameSettingDto;
-import com.bol.mancala.domain.dto.Game.GameSetupDto;
-import com.bol.mancala.domain.dto.Game.GameSetupResultDto;
-import com.bol.mancala.domain.dto.Game.PlayerDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSettingDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSetupDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSetupResultDto;
+import com.bol.mancala.domain.dto.Game.player.PlayerDto;
 
 import java.util.List;
 

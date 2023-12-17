@@ -2,7 +2,7 @@ package com.bol.mancala.game.service.impl;
 
 import com.bol.mancala.base.config.properties.ApplicationProperties;
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.Game.GameSetupDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSetupDto;
 import com.bol.mancala.domain.model.concept.Board;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.game.GameSetting;

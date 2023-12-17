@@ -1,7 +1,7 @@
 package com.bol.mancala.game.rule.basic;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.game.rule.impl.*;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class GameCommanderChain {
 
     public void play(Game game, PlayDto playDto) throws CustomException {
         for (GameCommander commander : executors) {
-            commander.play(game, playDto);
+            commander.action(game, playDto);
         }
     }
 }

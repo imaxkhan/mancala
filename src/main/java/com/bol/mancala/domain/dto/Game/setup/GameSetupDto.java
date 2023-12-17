@@ -1,7 +1,8 @@
-package com.bol.mancala.domain.dto.Game;
+package com.bol.mancala.domain.dto.Game.setup;
 
 import com.bol.mancala.base.config.oop.IValidation;
 import com.bol.mancala.base.exception.CustomException;
+import com.bol.mancala.domain.dto.Game.player.PlayerDto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

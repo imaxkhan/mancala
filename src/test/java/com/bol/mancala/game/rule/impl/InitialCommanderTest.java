@@ -22,14 +22,14 @@ class InitialCommanderTest {
     void testPlayWhenGameStatusIsNotStarted() {
         Game game = new Game();
         game.setStatus(GameStatus.NOT_STARTED);
-        Assertions.assertThrows(CustomException.class, () -> initialCommander.play(game, null));
+        Assertions.assertThrows(CustomException.class, () -> initialCommander.action(game, null));
     }
 
     @Test
     void testPlayWhenGameStatusIsFinished() {
         Game game = new Game();
         game.setStatus(GameStatus.FINISHED);
-        Assertions.assertThrows(CustomException.class, () -> initialCommander.play(game, null));
+        Assertions.assertThrows(CustomException.class, () -> initialCommander.action(game, null));
     }
 
 

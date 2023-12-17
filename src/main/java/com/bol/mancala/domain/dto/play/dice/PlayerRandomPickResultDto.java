@@ -1,4 +1,4 @@
-package com.bol.mancala.domain.dto.play;
+package com.bol.mancala.domain.dto.play.dice;
 
 import com.bol.mancala.domain.enums.GameStatus;
 import com.bol.mancala.domain.model.player.Player;

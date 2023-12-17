@@ -1,4 +1,4 @@
-package com.bol.mancala.domain.dto.Game;
+package com.bol.mancala.domain.dto.Game.player;
 
 import com.bol.mancala.domain.model.player.Player;
 import lombok.Getter;

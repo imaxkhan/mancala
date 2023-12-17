@@ -1,8 +1,8 @@
 package com.bol.mancala.presentation.resource;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayDto;
-import com.bol.mancala.domain.dto.play.PlayResultDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
+import com.bol.mancala.domain.dto.play.action.PlayResultDto;
 import com.bol.mancala.game.service.GamePlayService;
 import com.bol.mancala.presentation.api.GamePlayController;
 import lombok.RequiredArgsConstructor;

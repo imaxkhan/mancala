@@ -1,6 +1,6 @@
-package com.bol.mancala.domain.dto.play;
+package com.bol.mancala.domain.dto.play.champion;
 
-import com.bol.mancala.domain.dto.Game.PlayerDto;
+import com.bol.mancala.domain.dto.Game.player.PlayerDto;
 import com.bol.mancala.domain.model.player.Champion;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

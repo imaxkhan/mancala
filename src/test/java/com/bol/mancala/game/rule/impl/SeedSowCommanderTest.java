@@ -1,6 +1,6 @@
 package com.bol.mancala.game.rule.impl;
 
-import com.bol.mancala.domain.dto.play.PlayDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
 import com.bol.mancala.domain.model.concept.Board;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.player.Player;
@@ -57,7 +57,7 @@ class SeedSowCommanderTest {
         PlayDto playDto = new PlayDto();
         playDto.setPitIndex(5);
         playDto.setPlayerId(player.getPlayerId());
-        seedSowCommander.play(game, playDto);
+        seedSowCommander.action(game, playDto);
         Assertions.assertEquals(game.getBoard().getPits().get(0).getPlayer().getPlayerId(), player.getPlayerId());
         Assertions.assertNotEquals(game.getBoard().getActivePlayer().getPlayerId(), player.getPlayerId());
     }
@@ -74,7 +74,7 @@ class SeedSowCommanderTest {
         PlayDto playDto = new PlayDto();
         playDto.setPitIndex(2);
         playDto.setPlayerId(player.getPlayerId());
-        seedSowCommander.play(game, playDto);
+        seedSowCommander.action(game, playDto);
         Assertions.assertTrue(game.getBoard().getPits().get(6).isStore());
         Assertions.assertEquals(game.getBoard().getPits().get(6).getPlayer().getPlayerId(), player.getPlayerId());
         Assertions.assertEquals(game.getBoard().getActivePlayer().getPlayerId(), player.getPlayerId());
@@ -94,7 +94,7 @@ class SeedSowCommanderTest {
         PlayDto playDto = new PlayDto();
         playDto.setPitIndex(5);
         playDto.setPlayerId(player.getPlayerId());
-        seedSowCommander.play(game, playDto);
+        seedSowCommander.action(game, playDto);
         Assertions.assertEquals(game.getBoard().getPits().get(0).getPlayer().getPlayerId(), player.getPlayerId());
         Assertions.assertEquals(0,game.getBoard().getPits().get(0).getSeedCount());
         Assertions.assertEquals(0,game.getBoard().getPits().get(12).getSeedCount());

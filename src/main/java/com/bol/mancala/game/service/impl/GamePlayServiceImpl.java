@@ -2,8 +2,8 @@ package com.bol.mancala.game.service.impl;
 
 import com.bol.mancala.base.exception.CustomErrorCode;
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayDto;
-import com.bol.mancala.domain.dto.play.PlayResultDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
+import com.bol.mancala.domain.dto.play.action.PlayResultDto;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.game.repository.GameRepository;
 import com.bol.mancala.game.rule.basic.GameCommanderChain;

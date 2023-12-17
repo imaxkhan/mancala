@@ -1,6 +1,6 @@
 package com.bol.mancala.game.rule.impl;
 
-import com.bol.mancala.domain.dto.play.PlayDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
 import com.bol.mancala.domain.model.concept.Pit;
 import com.bol.mancala.domain.model.game.Game;
 import com.bol.mancala.domain.model.player.Champion;
@@ -22,7 +22,7 @@ import static java.util.stream.Collectors.summingInt;
 public class ChampionCommander implements GameCommander {
 
     @Override
-    public void play(Game game, PlayDto playDto) {
+    public void action(Game game, PlayDto playDto) {
         checkChampion(game);
     }
 

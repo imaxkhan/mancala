@@ -1,8 +1,8 @@
 package com.bol.mancala.presentation.api;
 
-import com.bol.mancala.domain.dto.Game.GameSetupResultDto;
-import com.bol.mancala.domain.dto.Game.PlayerResultDto;
-import com.bol.mancala.domain.dto.play.PlayDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSetupResultDto;
+import com.bol.mancala.domain.dto.Game.player.PlayerResultDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
 import com.bol.mancala.domain.enums.GameStatus;
 import com.bol.mancala.domain.model.concept.Pit;
 import com.bol.mancala.domain.model.game.Game;

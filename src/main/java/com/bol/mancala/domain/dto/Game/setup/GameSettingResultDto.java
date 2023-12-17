@@ -1,5 +1,6 @@
-package com.bol.mancala.domain.dto.Game;
+package com.bol.mancala.domain.dto.Game.setup;
 
+import com.bol.mancala.domain.dto.Game.setup.GameSettingDto;
 import com.bol.mancala.domain.model.game.GameSetting;
 import lombok.Getter;
 import lombok.Setter;

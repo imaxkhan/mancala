@@ -1,4 +1,4 @@
-package com.bol.mancala.domain.dto.Game;
+package com.bol.mancala.domain.dto.Game.player;
 
 import com.bol.mancala.base.config.oop.IValidation;
 import com.bol.mancala.base.exception.CustomErrorCode;

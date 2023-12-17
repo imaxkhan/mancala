@@ -1,6 +1,6 @@
 package com.bol.mancala.presentation.api;
 
-import com.bol.mancala.domain.dto.Game.GameSetupResultDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSetupResultDto;
 import com.bol.mancala.game.service.GameSetupService;
 import com.bol.mancala.presentation.constants.GameRestApi;
 import com.bol.mancala.util.ModelMocker;

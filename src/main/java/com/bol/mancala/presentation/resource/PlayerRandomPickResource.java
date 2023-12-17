@@ -1,7 +1,7 @@
 package com.bol.mancala.presentation.resource;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayerRandomPickResultDto;
+import com.bol.mancala.domain.dto.play.dice.PlayerRandomPickResultDto;
 import com.bol.mancala.game.service.impl.PlayerRandomPickerServiceImpl;
 import com.bol.mancala.presentation.api.PlayerRandomPickController;
 import lombok.RequiredArgsConstructor;

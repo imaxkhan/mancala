@@ -1,8 +1,8 @@
 package com.bol.mancala.presentation.resource;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.Game.GameSetupDto;
-import com.bol.mancala.domain.dto.Game.GameSetupResultDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSetupDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSetupResultDto;
 import com.bol.mancala.game.service.impl.GameSetupServiceImpl;
 import com.bol.mancala.presentation.api.GameSetupController;
 import jakarta.validation.Valid;

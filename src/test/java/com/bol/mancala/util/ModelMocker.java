@@ -1,9 +1,9 @@
 package com.bol.mancala.util;
 
-import com.bol.mancala.domain.dto.Game.GameSettingDto;
-import com.bol.mancala.domain.dto.Game.GameSetupDto;
-import com.bol.mancala.domain.dto.Game.PlayerDto;
-import com.bol.mancala.domain.dto.play.PlayDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSettingDto;
+import com.bol.mancala.domain.dto.Game.setup.GameSetupDto;
+import com.bol.mancala.domain.dto.Game.player.PlayerDto;
+import com.bol.mancala.domain.dto.play.action.PlayDto;
 import com.bol.mancala.domain.model.concept.Board;
 import com.bol.mancala.domain.model.concept.Pit;
 import com.bol.mancala.domain.model.game.GameSetting;

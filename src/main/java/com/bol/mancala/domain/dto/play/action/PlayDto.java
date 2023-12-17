@@ -1,4 +1,4 @@
-package com.bol.mancala.domain.dto.play;
+package com.bol.mancala.domain.dto.play.action;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

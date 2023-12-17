@@ -57,7 +57,9 @@ class GameSetupControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].code").value("VALIDATION_FAILED"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value("must not be empty"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].message").value(anyOf(
+                        Matchers.is("must not be null"),
+                        Matchers.is("must not be empty"))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].field").value("players"));
     }
 

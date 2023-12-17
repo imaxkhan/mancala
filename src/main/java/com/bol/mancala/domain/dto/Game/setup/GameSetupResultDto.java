@@ -1,5 +1,7 @@
-package com.bol.mancala.domain.dto.Game;
+package com.bol.mancala.domain.dto.Game.setup;
 
+import com.bol.mancala.domain.dto.Game.player.PlayerResultDto;
+import com.bol.mancala.domain.dto.Game.board.BoardResultDto;
 import com.bol.mancala.domain.enums.GameStatus;
 import com.bol.mancala.domain.model.game.Game;
 import lombok.Getter;

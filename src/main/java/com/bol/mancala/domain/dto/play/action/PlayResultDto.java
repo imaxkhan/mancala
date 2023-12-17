@@ -1,7 +1,8 @@
-package com.bol.mancala.domain.dto.play;
+package com.bol.mancala.domain.dto.play.action;
 
-import com.bol.mancala.domain.dto.Game.BoardResultDto;
-import com.bol.mancala.domain.dto.Game.PlayerResultDto;
+import com.bol.mancala.domain.dto.Game.board.BoardResultDto;
+import com.bol.mancala.domain.dto.Game.player.PlayerResultDto;
+import com.bol.mancala.domain.dto.play.champion.ChampionResultDto;
 import com.bol.mancala.domain.model.game.Game;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

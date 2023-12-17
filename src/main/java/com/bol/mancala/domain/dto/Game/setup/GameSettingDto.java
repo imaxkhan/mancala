@@ -1,4 +1,4 @@
-package com.bol.mancala.domain.dto.Game;
+package com.bol.mancala.domain.dto.Game.setup;
 
 import com.bol.mancala.domain.model.game.GameSetting;
 import jakarta.validation.constraints.Min;

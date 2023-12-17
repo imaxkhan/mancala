@@ -1,7 +1,7 @@
 package com.bol.mancala.presentation.api;
 
 import com.bol.mancala.base.exception.CustomException;
-import com.bol.mancala.domain.dto.play.PlayerRandomPickResultDto;
+import com.bol.mancala.domain.dto.play.dice.PlayerRandomPickResultDto;
 import com.bol.mancala.presentation.constants.GameRestApi;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
