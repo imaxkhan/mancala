@@ -36,13 +36,13 @@ option1: Use maven as build system and run below command
   java -jar mancala-0.0.1-SNAPSHOT.jar
 ```
 option2: use docker-compose
-```docker-compose
+```bash
 docker-compose up -d
 ```
 ## Api specification
 
-```bash
-http://localhost:8080/api/v2/swagger-ui/index.html
+```http
+ http://localhost:8080/api/v2/swagger-ui/index.html
 ```
 
 
@@ -52,7 +52,7 @@ http://localhost:8080/api/v2/swagger-ui/index.html
 #### step1: create game setup with players
 
 ```http
-  POST /api/games/setup
+  POST /api/games
 ```
 Request Body
 ```json
@@ -233,7 +233,7 @@ Response Body
 #### step2: Pick a random player to start the game
 
 ```http
-  POST /api/players/pick/{gameId}
+  POST /api/games/{gameId}/dices
 ```
 
 Response Body
@@ -252,7 +252,7 @@ Response Body
 #### step3: Pick a pit index with gameId and play
 
 ```http
-  PUT /api/plays/{gameId}
+  PUT /api/games/{gameId}/actions
 ```
 Request Body
 
