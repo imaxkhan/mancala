@@ -23,11 +23,4 @@ public class CustomErrorResult {
         this.message = exception.getMessage();
         this.field = null;
     }
-
-    public CustomErrorResult(CustomException exception, HttpServletResponse response) {
-        this.code = exception.getCode();
-        this.message = exception.getMessage();
-        this.field = null;
-        response.setStatus(this.code.getValue());
-    }
 }
